@@ -78,6 +78,7 @@
     <Compile Include="KadabraContext.cs" />
     <Compile Include="KadabraUser.cs" />
     <Compile Include="KadabraUserStore.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

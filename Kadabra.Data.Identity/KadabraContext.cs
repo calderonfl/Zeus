@@ -6,7 +6,7 @@ namespace Kadabra.Data.Identity
     public class KadabraContext : IdentityDbContext<KadabraUser> 
     {
         public KadabraContext()
-            : base()
+            : base("KadabraDb")
         {
         }
 
@@ -17,6 +17,11 @@ namespace Kadabra.Data.Identity
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<KadabraUser>().ToTable("KadabraUser");
+            modelBuilder.Entity<IdentityRole>().ToTable("KadabraRole");
+            modelBuilder.Entity<IdentityUserRole>().ToTable("KadabraUserRole");
+            modelBuilder.Entity<IdentityUserClaim>().ToTable("KadabraUserClaim");
+            modelBuilder.Entity<IdentityUserLogin>().ToTable("KadabraUserLogin");
             base.OnModelCreating(modelBuilder);
         }
     }

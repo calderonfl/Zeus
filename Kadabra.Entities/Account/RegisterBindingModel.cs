@@ -1,10 +1,25 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Kadabra.Entities.Account
 {
     public class RegisterBindingModel
     {
         [Required]
+        [Display(Name = "Nombre")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Apellidos")]
+        public string LastName { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Fecha de nacimiento")]
+        public DateTime Birthday { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
         [Display(Name = "Correo Electrónico")]
         public string Email { get; set; }
 
