@@ -50,5 +50,9 @@ namespace Kadabra.Data.Identity
                 return KadabraMatchStatus.MatchStatusPending;
             return KadabraMatchStatus.MatchStatusOpen;
         }
+        public KadabraTournament Tournament { get; set; }
+        public string MatchDayId { get; set; }
+        public KadabraMatchDay MatchDay { get; set; }
+        public string TournamentId { get; set; }
     }
 }

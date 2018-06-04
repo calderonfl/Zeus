@@ -10,7 +10,6 @@ namespace Kadabra.Data.Identity
         public string Alias { get; set; }
         public string Description { get; set; }
         public int? MemberCount { get; set; }
-        public string FbAccount { get; set; }
         public KadabraLeagueStatus Status { get; set; }
         public bool Enabled { get; set; }
         public string CoverPhotoUrl { get; set; }

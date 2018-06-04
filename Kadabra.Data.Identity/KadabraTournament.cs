@@ -18,6 +18,6 @@ namespace Kadabra.Data.Identity
         public bool? AppearInLeaderboards { get; set; }
         public KadabraMatches Matches { get; set; }
         public string FlagImageUrl { get; set; }
-
+        public KadabraUserTournaments Tournaments { get; set; }
     }
 }

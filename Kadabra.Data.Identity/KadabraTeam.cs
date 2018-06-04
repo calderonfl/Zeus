@@ -13,5 +13,8 @@ namespace Kadabra.Data.Identity
         public string TeamKey { get; set; }
         public string ImageSmallUrl { get; set; }
         public string ImageBigUrl { get; set; }
+
+        public KadabraMatches MatchesHome { get; set; }
+        public KadabraMatches MatchesAway { get; set; }
     }
 }
