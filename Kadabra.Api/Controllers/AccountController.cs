@@ -10,6 +10,7 @@ using System.Linq;
 namespace Kadabra.Api.Controllers
 {
     [Authorize]
+    
     [RoutePrefix("Kadabra/Account")]
     public class AccountController : ApiController
     {

@@ -99,8 +99,12 @@
     <Compile Include="KadabraMatchStatus.cs" />
     <Compile Include="KadabraPrediction.cs" />
     <Compile Include="KadabraPredictions.cs" />
+    <Compile Include="KadabraPredictionStatus.cs" />
     <Compile Include="KadabraTeam.cs" />
+    <Compile Include="KadabraTeams.cs" />
+    <Compile Include="KadabraTeamWinner.cs" />
     <Compile Include="KadabraTournament.cs" />
+    <Compile Include="KadabraTournaments.cs" />
     <Compile Include="KadabraUser.cs" />
     <Compile Include="KadabraUsers.cs" />
     <Compile Include="KadabraUserStore.cs" />

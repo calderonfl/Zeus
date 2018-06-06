@@ -18,7 +18,7 @@
     <AssemblyName>Kadabra.Api</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -204,7 +204,10 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TeamController.cs" />
+    <Compile Include="Controllers\TeamServices.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -311,6 +314,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Serv\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -324,6 +328,10 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Kadabra.Api.Services\Kadabra.Api.Services.csproj">
+      <Project>{284c23b7-9b4c-49ce-a966-efe6b247913e}</Project>
+      <Name>Kadabra.Api.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Kadabra.Data.Identity\Kadabra.Data.Identity.csproj">
       <Project>{05df2373-3771-4a12-89dd-9f40a5719462}</Project>
       <Name>Kadabra.Data.Identity</Name>
@@ -335,6 +343,10 @@
     <ProjectReference Include="..\Kadabra.Identity\Kadabra.Identity.csproj">
       <Project>{e4eb7fbf-7b0e-4e95-baa7-5765edad2cc4}</Project>
       <Name>Kadabra.Identity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Kadabra.Model\Kadabra.Model.csproj">
+      <Project>{bffec530-14b8-4ef8-a886-e99195a884e2}</Project>
+      <Name>Kadabra.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
@@ -356,7 +368,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>4786</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:4786/</IISUrl>
+          <IISUrl>http://localhost/Kadabra.Api</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

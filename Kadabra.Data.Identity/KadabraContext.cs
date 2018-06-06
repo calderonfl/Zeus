@@ -18,27 +18,27 @@ namespace Kadabra.Data.Identity
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<KadabraUser>().ToTable("KadabraUser", "dbo");
-            modelBuilder.Entity<KadabraUser>().Property(p => p.UserName).HasColumnName("FirstName");
-            modelBuilder.Entity<KadabraUser>().Property(p => p.Id).HasColumnName("UserId");
-            modelBuilder.Entity<KadabraUser>().HasMany(p => p.Leagues).WithRequired(s => s.User).HasForeignKey(p => p.UserId);
-            modelBuilder.Entity<KadabraUser>().HasMany(u => u.UserTournaments).WithRequired(t => t.User).HasForeignKey(t => t.UserId);
+            //modelBuilder.Entity<KadabraUser>().ToTable("KadabraUser", "dbo");
+            //modelBuilder.Entity<KadabraUser>().Property(p => p.UserName).HasColumnName("FirstName");
+            //modelBuilder.Entity<KadabraUser>().Property(p => p.Id).HasColumnName("UserId");
+            //modelBuilder.Entity<KadabraUser>().HasMany(p => p.Leagues).WithRequired(s => s.User).HasForeignKey(p => p.UserId);
+            //modelBuilder.Entity<KadabraUser>().HasMany(u => u.UserTournaments).WithRequired(t => t.User).HasForeignKey(t => t.UserId);
 
-            modelBuilder.Entity<KadabraUserTournament>().HasKey(ut => ut.Id);
+            //modelBuilder.Entity<KadabraUserTournament>().HasKey(ut => ut.Id);
 
-            modelBuilder.Entity<KadabraTournament>().ToTable("KadabraTournament", "dbo");
-            modelBuilder.Entity<KadabraTournament>().HasMany(t => t.Tournaments).WithRequired(ut => ut.Tournament).HasForeignKey(ut => ut.TournamentId);
-            modelBuilder.Entity<KadabraTournament>().HasMany(t => t.Matches).WithRequired(m => m.Tournament).HasForeignKey(m => m.TournamentId);
+            //modelBuilder.Entity<KadabraTournament>().ToTable("KadabraTournament", "dbo");
+            //modelBuilder.Entity<KadabraTournament>().HasMany(t => t.Tournaments).WithRequired(ut => ut.Tournament).HasForeignKey(ut => ut.TournamentId);
+            //modelBuilder.Entity<KadabraTournament>().HasMany(t => t.Matches).WithRequired(m => m.Tournament).HasForeignKey(m => m.TournamentId);
 
             //modelBuilder.Entity<KadabraMatchDay>().ToTable("KadabraMatchDay", "dbo");
             //modelBuilder.Entity<KadabraMatchDay>().HasMany(md => md.Matches).WithRequired(m => m.MatchDay).HasForeignKey(m => m.MatchDayId);
 
-            modelBuilder.Entity<KadabraMatch>().ToTable("KadabraMatch", "dbo");
+            //modelBuilder.Entity<KadabraMatch>().ToTable("KadabraMatch", "dbo");
             
 
             modelBuilder.Entity<KadabraTeam>().ToTable("KadabraTeam", "dbo");
-            modelBuilder.Entity<KadabraTeam>().HasMany(t => t.MatchesAway).WithRequired(m => m.TeamAway).HasForeignKey(m => m.TeamAwayId);
-            modelBuilder.Entity<KadabraTeam>().HasMany(t => t.MatchesHome).WithRequired(m => m.TeamHome).HasForeignKey(m => m.TeamHomeId);
+            //modelBuilder.Entity<KadabraTeam>().HasMany(t => t.MatchesAway).WithRequired(m => m.TeamAway).HasForeignKey(m => m.TeamAwayId);
+            //modelBuilder.Entity<KadabraTeam>().HasMany(t => t.MatchesHome).WithRequired(m => m.TeamHome).HasForeignKey(m => m.TeamHomeId);
 
 
             

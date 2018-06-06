@@ -2,9 +2,6 @@
 {
     public enum KadabraMatchStatus
     {
-        MatchStatusExact,
-        MatchStatusCorrect,
-        MatchStatusIncorrect,
         MatchStatusFinished,
         MatchStatusPending,
         MatchStatusOpen

@@ -12,7 +12,7 @@ namespace Kadabra.Data.Identity
             userTournaments = new List<KadabraUser>();
         }
 
-        int ICollection<KadabraUser>.Count => userTournaments.Count;
+        public int Count => userTournaments.Count;
 
         bool ICollection<KadabraUser>.IsReadOnly => userTournaments.IsReadOnly;
 
