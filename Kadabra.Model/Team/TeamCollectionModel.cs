@@ -7,6 +7,9 @@ namespace Kadabra.Model.Team
     {
         private readonly IList<TeamModel> teams = null;
 
+        public TeamCollectionModel() : this(new List<TeamModel>())
+        {
+        }
         public TeamCollectionModel(IEnumerable<TeamModel> teamModels)
         {
             this.teams = new List<TeamModel>(teamModels);

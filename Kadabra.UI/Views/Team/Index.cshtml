@@ -1,42 +1,54 @@
 ﻿@model Kadabra.Model.Team.TeamCollectionModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.TitleOption = "Equipos";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+@using (Html.BeginForm("AddTeam", "Team"))
+{
+    <input type="submit" class="btn btn-primary" value="Agregar"/>
+    <p></p>
 }
 
-<h2>Index</h2>
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="thead-dark text-center" >
+            <tr>
+                <th>Nombre</th>
+                <th>Acrónimo</th>
+                <th>País</th>
+                <th>Imagen</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            @foreach (Kadabra.Model.Team.TeamModel item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TeamKey)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImageFlag)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+                @*<td>
+                    @Html.HiddenFor(modelItem => item.Id)
+                </td>*@
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Count)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsReadOnly)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (Kadabra.Model.Team.TeamModel item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Country)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
-</table>

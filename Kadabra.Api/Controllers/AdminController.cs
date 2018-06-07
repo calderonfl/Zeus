@@ -1,17 +1,16 @@
-﻿using Kadabra.Api.Services;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web.Http;
 
 namespace Kadabra.Api.Controllers
 {
     public class AdminController : ApiController
     {
-        private readonly IAdminServices services;
+        //private readonly IAdminServices services;
         
-        public AdminController(IAdminServices services)
-        {
-            this.services = services;
-        }
+        //public AdminController(IAdminServices services)
+        //{
+        //    this.services = services;
+        //}
 
         
         // GET api/<controller>

@@ -15,7 +15,7 @@ namespace Kadabra.Api
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "Kadabra/{controller}/{id}",
+                routeTemplate: "Kadabra/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
         }

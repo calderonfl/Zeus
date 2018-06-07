@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Team\ITeamServices.cs" />
     <Compile Include="Team\TeamAddModel.cs" />
     <Compile Include="Team\TeamCollectionModel.cs" />
     <Compile Include="Team\TeamModel.cs" />

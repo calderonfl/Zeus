@@ -1,8 +1,11 @@
 ﻿using System.Web.Http;
 using Kadabra.Model.Team;
-using System;
 using System.Threading.Tasks;
-using Kadabra.Api.Services;
+using Kadabra.Model.Team.Services;
+using Kadabra.Api.Servicios;
+using Kadabra.Data;
+using Kadabra.Data.Identity;
+using System;
 
 namespace Kadabra.Api.Controllers
 {
@@ -11,7 +14,7 @@ namespace Kadabra.Api.Controllers
     {
         private readonly ITeamServices services;
 
-        public TeamController() : this(new TeamServices())
+        public TeamController() : this(new TeamServices(new Repository()))
         {
 
         }
@@ -20,7 +23,7 @@ namespace Kadabra.Api.Controllers
         {
             this.services = services;
         }
-        // GET api/<controller>
+
         [HttpGet()]
         [AllowAnonymous]
         public async Task<IHttpActionResult> GetAll()
@@ -34,9 +37,23 @@ namespace Kadabra.Api.Controllers
             return "value";
         }
 
-        // POST api/<controller>
-        public void Post([FromBody]string value)
+        [HttpPost()]
+        [AllowAnonymous]
+        public async Task<IHttpActionResult> AddTeam(TeamAddModel team)
         {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await services.Add(team);
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    return InternalServerError(ex);
+                }
+            }
+            return this.InternalServerError();
         }
 
         // PUT api/<controller>/5

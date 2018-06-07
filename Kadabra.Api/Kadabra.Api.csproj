@@ -207,7 +207,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
-    <Compile Include="Controllers\TeamServices.cs" />
+    <Compile Include="Servicios\TeamServices.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -314,7 +314,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Serv\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -328,13 +327,13 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Kadabra.Api.Services\Kadabra.Api.Services.csproj">
-      <Project>{284c23b7-9b4c-49ce-a966-efe6b247913e}</Project>
-      <Name>Kadabra.Api.Services</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Kadabra.Data.Identity\Kadabra.Data.Identity.csproj">
       <Project>{05df2373-3771-4a12-89dd-9f40a5719462}</Project>
       <Name>Kadabra.Data.Identity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Kadabra.Data\Kadabra.Data.csproj">
+      <Project>{92A89266-A21A-48A8-B1AB-AE920EE6881C}</Project>
+      <Name>Kadabra.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Kadabra.Entities\Kadabra.Entities.csproj">
       <Project>{f07ba512-f5bf-4036-8358-8fbaae76902d}</Project>
