@@ -1,4 +1,5 @@
 ﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.2.8.2\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.8.2\build\Microsoft.Net.Compilers.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -24,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>2.6</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -113,16 +115,6 @@
     <Content Include="Content\Admin\js\sb-admin-datatables.min.js" />
     <Content Include="Content\Admin\js\sb-admin.js" />
     <Content Include="Content\Admin\js\sb-admin.min.js" />
-    <Content Include="Content\Admin\vendor\bootstrap\css\bootstrap-grid.css" />
-    <Content Include="Content\Admin\vendor\bootstrap\css\bootstrap-grid.min.css" />
-    <Content Include="Content\Admin\vendor\bootstrap\css\bootstrap-reboot.css" />
-    <Content Include="Content\Admin\vendor\bootstrap\css\bootstrap-reboot.min.css" />
-    <Content Include="Content\Admin\vendor\bootstrap\css\bootstrap.css" />
-    <Content Include="Content\Admin\vendor\bootstrap\css\bootstrap.min.css" />
-    <Content Include="Content\Admin\vendor\bootstrap\js\bootstrap.bundle.js" />
-    <Content Include="Content\Admin\vendor\bootstrap\js\bootstrap.bundle.min.js" />
-    <Content Include="Content\Admin\vendor\bootstrap\js\bootstrap.js" />
-    <Content Include="Content\Admin\vendor\bootstrap\js\bootstrap.min.js" />
     <Content Include="Content\Admin\vendor\chart.js\Chart.bundle.js" />
     <Content Include="Content\Admin\vendor\chart.js\Chart.bundle.min.js" />
     <Content Include="Content\Admin\vendor\chart.js\Chart.js" />
@@ -136,26 +128,13 @@
     <Content Include="Content\Admin\vendor\jquery-easing\jquery.easing.compatibility.js" />
     <Content Include="Content\Admin\vendor\jquery-easing\jquery.easing.js" />
     <Content Include="Content\Admin\vendor\jquery-easing\jquery.easing.min.js" />
-    <Content Include="Content\Admin\vendor\jquery\jquery.js" />
-    <Content Include="Content\Admin\vendor\jquery\jquery.min.js" />
-    <Content Include="Content\Admin\vendor\jquery\jquery.slim.js" />
-    <Content Include="Content\Admin\vendor\jquery\jquery.slim.min.js" />
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\TeamController.cs" />
-    <Compile Include="Controllers\TeamServicesClient.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\web.config" />
     <Content Include="Content\Admin\pug\blank.pug" />
     <Content Include="Content\Admin\pug\cards.pug" />
     <Content Include="Content\Admin\pug\charts.pug" />
@@ -186,12 +165,6 @@
     <Content Include="Content\Admin\scss\_mixins.scss" />
     <Content Include="Content\Admin\scss\_utilities.scss" />
     <Content Include="Content\Admin\scss\_variables.scss" />
-    <Content Include="Content\Admin\vendor\bootstrap\css\bootstrap.css.map" />
-    <Content Include="Content\Admin\vendor\bootstrap\css\bootstrap.min.css.map" />
-    <Content Include="Content\Admin\vendor\bootstrap\js\bootstrap.bundle.js.map" />
-    <Content Include="Content\Admin\vendor\bootstrap\js\bootstrap.bundle.min.js.map" />
-    <Content Include="Content\Admin\vendor\bootstrap\js\bootstrap.js.map" />
-    <Content Include="Content\Admin\vendor\bootstrap\js\bootstrap.min.js.map" />
     <Content Include="Content\Admin\vendor\font-awesome\css\font-awesome.css.map" />
     <Content Include="Content\Admin\vendor\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\Admin\vendor\font-awesome\fonts\fontawesome-webfont.ttf" />
@@ -226,12 +199,80 @@
     <Content Include="Content\Admin\vendor\font-awesome\scss\_screen-reader.scss" />
     <Content Include="Content\Admin\vendor\font-awesome\scss\_stacked.scss" />
     <Content Include="Content\Admin\vendor\font-awesome\scss\_variables.scss" />
-    <Content Include="Content\Admin\vendor\jquery\jquery.min.map" />
-    <Content Include="Content\Admin\vendor\jquery\jquery.slim.min.map" />
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.js.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Scripts\esm\popper-utils.js" />
+    <Content Include="Scripts\esm\popper-utils.min.js" />
+    <Content Include="Scripts\esm\popper.js" />
+    <Content Include="Scripts\esm\popper.min.js" />
+    <Content Include="Scripts\esm\popper.min.js.map" />
+    <Content Include="Scripts\esm\popper.js.map" />
+    <Content Include="Scripts\esm\popper-utils.min.js.map" />
+    <Content Include="Scripts\esm\popper-utils.js.map" />
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.bootstrap.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.bootstrap.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\popper-utils.js" />
+    <Content Include="Scripts\popper-utils.min.js" />
+    <Content Include="Scripts\popper.js" />
+    <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\umd\popper-utils.js" />
+    <Content Include="Scripts\umd\popper-utils.min.js" />
+    <Content Include="Scripts\umd\popper.js" />
+    <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\TeamController.cs" />
+    <Compile Include="Controllers\TeamServicesClient.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\web.config" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Team\Index.cshtml" />
+    <Content Include="Views\Team\Edit.cshtml" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.3.1.min.map" />
+    <Content Include="Scripts\umd\popper.min.js.map" />
+    <Content Include="Scripts\umd\popper.js.map" />
+    <Content Include="Scripts\umd\popper-utils.min.js.map" />
+    <Content Include="Scripts\umd\popper-utils.js.map" />
+    <Content Include="Scripts\README.md" />
+    <Content Include="Scripts\popper.min.js.map" />
+    <Content Include="Scripts\popper.js.map" />
+    <Content Include="Scripts\popper-utils.min.js.map" />
+    <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.bootstrap.min.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -250,11 +291,18 @@
       <Name>Kadabra.Model</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>

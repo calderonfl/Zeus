@@ -46,7 +46,7 @@
     <Compile Include="Team\TeamAddModel.cs" />
     <Compile Include="Team\TeamCollectionModel.cs" />
     <Compile Include="Team\TeamModel.cs" />
-    <Compile Include="Team\TeamRemoveModel.cs" />
+    <Compile Include="Team\TeamIdModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

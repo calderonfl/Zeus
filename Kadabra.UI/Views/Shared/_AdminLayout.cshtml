@@ -7,6 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Kadabra</title>
+    @Styles.Render("~/Bundles/bootstrap/css")
     @Styles.Render("~/Bundles/admin/css")
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -264,7 +265,10 @@
                 </div>
             </div>
         </div>
+        @Styles.Render("~/Bundles/jquery")
+        @Styles.Render("~/Bundles/bootstrap/js")
         @Styles.Render("~/Bundles/admin/js")
+        @RenderSection("Scripts", false)
     </div>
 </body>
 </html>

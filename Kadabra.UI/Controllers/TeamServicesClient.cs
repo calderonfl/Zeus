@@ -67,5 +67,14 @@ namespace Kadabra.UI.Controllers
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+        public async Task<TeamModel> Get(TeamIdModel teamId)
+        {
+            HttpResponseMessage response = await apiClient.PostAsJsonAsync("Kadabra/Team/Get", teamId);
+            if (response.IsSuccessStatusCode)
+                return await response.Content.ReadAsAsync<TeamModel>();
+            else
+                return null;
+        }
     }
 }

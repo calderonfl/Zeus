@@ -30,13 +30,13 @@ namespace Kadabra.Api.Controllers
         {
             return Ok<TeamCollectionModel>(await services.GetAll());
         }
-
-        // GET api/<controller>/5
-        public string Get(int id)
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<TeamModel> Get(TeamIdModel model)
         {
-            return "value";
+            return await services.Get(model);
         }
-
+        
         [HttpPost()]
         [AllowAnonymous]
         public async Task<IHttpActionResult> AddTeam(TeamAddModel team)

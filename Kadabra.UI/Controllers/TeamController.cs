@@ -27,5 +27,12 @@ namespace Kadabra.UI.Controllers
             await teamService.Add(new TeamAddModel() { Country="Costa Rica", ImageFlag="", Name= "Costa Rica", TeamKey="CRC" });
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(TeamIdModel idModel)
+        {
+            TeamModel model = await teamService.Get(idModel);
+            return View(model);
+        }
     }
 }

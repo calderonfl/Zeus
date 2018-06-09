@@ -11,15 +11,15 @@ namespace Kadabra.Api.Servicios
     internal class TeamServices : ITeamServices
     {
         private bool disposedValue = false;
-        private readonly Repository repository;
+        private readonly IRepository repository;
 
-        public TeamServices(Repository repository)
+        public TeamServices(IRepository repository)
         {
             this.repository = repository;
         }
         public async Task Add(TeamAddModel team)
         {
-            await repository.Agregar(new KadabraTeam()
+            await repository.Add(new KadabraTeam()
             {
                 Country = team.Country,
                 ImageFlag = team.ImageFlag,
@@ -76,6 +76,19 @@ namespace Kadabra.Api.Servicios
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        public async Task<TeamModel> Get(TeamIdModel model)
+        {
+            KadabraTeam team = await repository.FindOne<KadabraTeam>(f => f.Id == model.Id);
+            return new TeamModel()
+            {
+                Country = team.Country,
+                Id = team.Id,
+                ImageFlag = team.ImageFlag,
+                Name = team.Name,
+                TeamKey = team.TeamKey
+            };
         }
     }
 }
