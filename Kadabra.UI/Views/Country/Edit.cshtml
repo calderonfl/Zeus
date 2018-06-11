@@ -1,0 +1,60 @@
+﻿@model Kadabra.Model.Country.CountryModel
+
+@{
+    ViewBag.TitleOption = "Países / Editar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container">
+    <div class="card">
+        <div class="card-header">Crear País</div>
+        <div class="card-body">
+            @using (Html.BeginForm("SaveCountry", "Country", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col" })
+                        <div class="col">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Nombre" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CountryKey, htmlAttributes: new { @class = "control-label col" })
+                        <div class="col">
+                            @Html.EditorFor(model => model.CountryKey, new { htmlAttributes = new { @class = "form-control", placeholder = "Acrónimo" } })
+                            @Html.ValidationMessageFor(model => model.CountryKey, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ImageFlag, htmlAttributes: new { @class = "control-label col" })
+                        <div class="col">
+                            @Html.EditorFor(model => model.ImageFlag, new { htmlAttributes = new { @class = "form-control", placeholder = "Url" } })
+                            @Html.ValidationMessageFor(model => model.ImageFlag, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row justify-content-center align-items-center">
+                        <div class="form-group">
+                            <div class="col">
+                                <button type="submit" class="btn-sm btn-outline-primary" formmethod="post">
+                                    <i class="fa fa-fw fa-save"></i>Guardar
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col">
+                                <button type="button" onclick="location.href='@Url.Action("Index", "Country")'" class="btn-sm btn-outline-secondary">
+                                    <i class="fa fa-fw fa-backward"></i>Regresar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

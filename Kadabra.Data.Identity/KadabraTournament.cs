@@ -14,10 +14,10 @@ namespace Kadabra.Data.Identity
         public DateTime End { get; set; }
         public int? MinAccuracyPredictions { get; set; }
         public int? MatchDays { get; set; }
-        public bool? AppearInDashboard { get; set; }
-        public bool? AppearInLeaderboards { get; set; }
+        //public bool? AppearInDashboard { get; set; }
+        //public bool? AppearInLeaderboards { get; set; }
         public string FlagImageUrl { get; set; }
-        public KadabraMatches Matches { get; set; }
-        public KadabraUserTournaments Tournaments { get; set; }
+        //public KadabraMatches Matches { get; set; }
+        //public KadabraUserTournaments Tournaments { get; set; }
     }
 }

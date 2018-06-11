@@ -36,12 +36,15 @@ namespace Kadabra.Data.Identity
             //modelBuilder.Entity<KadabraMatch>().ToTable("KadabraMatch", "dbo");
             
 
+            modelBuilder.Entity<KadabraCountry>().ToTable("KadabraCountry", "dbo");
+            modelBuilder.Entity<KadabraTeam>().HasRequired(t => t.Country).WithMany(c => c.Teams).HasForeignKey(c => c.CountryId);
             modelBuilder.Entity<KadabraTeam>().ToTable("KadabraTeam", "dbo");
+
             //modelBuilder.Entity<KadabraTeam>().HasMany(t => t.MatchesAway).WithRequired(m => m.TeamAway).HasForeignKey(m => m.TeamAwayId);
             //modelBuilder.Entity<KadabraTeam>().HasMany(t => t.MatchesHome).WithRequired(m => m.TeamHome).HasForeignKey(m => m.TeamHomeId);
 
 
-            
+
             //modelBuilder.Entity<KadabraTeam>().ToTable("KadabraTeam", "dbo");
 
             // Una prediccion es sobre un encuentro.

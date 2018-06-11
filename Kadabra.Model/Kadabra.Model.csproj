@@ -41,7 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Country\ICountryServices.cs" />
+    <Compile Include="Country\CountryAddModel.cs" />
+    <Compile Include="Country\CountryCollectionModel.cs" />
+    <Compile Include="Country\CountryIdModel.cs" />
+    <Compile Include="Country\CountryModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegisterBindingModel.cs" />
     <Compile Include="Team\ITeamServices.cs" />
     <Compile Include="Team\TeamAddModel.cs" />
     <Compile Include="Team\TeamCollectionModel.cs" />

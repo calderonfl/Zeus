@@ -3,7 +3,7 @@ namespace Kadabra.Data.Identity.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Init : DbMigration
+    public partial class Inicial : DbMigration
     {
         public override void Up()
         {
@@ -80,25 +80,40 @@ namespace Kadabra.Data.Identity.Migrations
                 .Index(t => t.UserId);
             
             CreateTable(
+                "dbo.KadabraCountry",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Name = c.String(maxLength: 128),
+                        CountryKey = c.String(maxLength: 128),
+                        ImageFlag = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.KadabraTeam",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         Name = c.String(maxLength: 128),
-                        Country = c.String(maxLength: 128),
+                        CountryId = c.String(nullable: false, maxLength: 128),
                         TeamKey = c.String(maxLength: 3),
                         ImageFlag = c.String(),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.KadabraCountry", t => t.CountryId, cascadeDelete: true)
+                .Index(t => t.CountryId);
             
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.KadabraTeam", "CountryId", "dbo.KadabraCountry");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropIndex("dbo.KadabraTeam", new[] { "CountryId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
@@ -106,6 +121,7 @@ namespace Kadabra.Data.Identity.Migrations
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropTable("dbo.KadabraTeam");
+            DropTable("dbo.KadabraCountry");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");

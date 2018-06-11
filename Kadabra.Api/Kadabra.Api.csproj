@@ -205,8 +205,10 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
+    <Compile Include="Servicios\CountryServices.cs" />
     <Compile Include="Servicios\TeamServices.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -314,6 +316,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Country\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -334,10 +337,6 @@
     <ProjectReference Include="..\Kadabra.Data\Kadabra.Data.csproj">
       <Project>{92A89266-A21A-48A8-B1AB-AE920EE6881C}</Project>
       <Name>Kadabra.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Kadabra.Entities\Kadabra.Entities.csproj">
-      <Project>{f07ba512-f5bf-4036-8358-8fbaae76902d}</Project>
-      <Name>Kadabra.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\Kadabra.Identity\Kadabra.Identity.csproj">
       <Project>{e4eb7fbf-7b0e-4e95-baa7-5765edad2cc4}</Project>

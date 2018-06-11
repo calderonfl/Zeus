@@ -1,50 +1,49 @@
 ﻿using System.Web.Http;
-using Kadabra.Model.Team;
+using Kadabra.Model.Country;
 using System.Threading.Tasks;
-using Kadabra.Model.Team.Services;
+using Kadabra.Model.Country.Services;
 using Kadabra.Api.Servicios;
 using Kadabra.Data;
 using System;
-using Kadabra.Model.Country;
 
 namespace Kadabra.Api.Controllers
 {
-    [RoutePrefix("Team")]
-    public class TeamController : ApiController
+    [RoutePrefix("Country")]
+    public class CountryController : ApiController
     {
-        private readonly ITeamServices services;
+        private readonly ICountryServices services;
 
-        public TeamController() : this(new TeamServices(new Repository()))
+        public CountryController() : this(new CountryServices(new Repository()))
         {
 
         }
 
-        public TeamController(ITeamServices services)
+        public CountryController(ICountryServices services)
         {
             this.services = services;
         }
 
         [HttpGet()]
         [AllowAnonymous]
-        public async Task<IHttpActionResult> GetAll()
+        public async Task<IHttpActionResult> GetAllCountries()
         {
-            return Ok<TeamCollectionModel>(await services.GetAll());
+            return Ok<CountryCollectionModel>(await services.GetAllCountries());
         }
         [HttpPost]
         [AllowAnonymous]
-        public async Task<TeamModel> Get(TeamIdModel model)
+        public async Task<CountryModel> GetCountry(CountryIdModel model)
         {
-            return await services.Get(model);
+            return await services.GetCountry(model);
         }
-        
+
         [HttpPost()]
         [AllowAnonymous]
-        public async Task<IHttpActionResult> AddTeam(TeamAddModel team)
+        public async Task<IHttpActionResult> AddCountry(CountryAddModel country)
         {
             if (!ModelState.IsValid) return this.InternalServerError();
             try
             {
-                await services.Add(team);
+                await services.Add(country);
                 return Ok();
             }
             catch (Exception ex)
@@ -55,12 +54,12 @@ namespace Kadabra.Api.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IHttpActionResult> EditTeam(TeamModel team)
+        public async Task<IHttpActionResult> EditCountry(CountryModel country)
         {
             if (!ModelState.IsValid) return InternalServerError();
             try
             {
-                await services.Edit(team);
+                await services.Edit(country);
                 return Ok();
             }
             catch (Exception ex)
@@ -71,24 +70,18 @@ namespace Kadabra.Api.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IHttpActionResult> DeleteTeam(TeamIdModel team)
+        public async Task<IHttpActionResult> DeleteCountry(CountryIdModel country)
         {
             if (!ModelState.IsValid) return InternalServerError();
             try
             {
-                await services.Remove(team);
+                await services.Remove(country);
                 return Ok();
             }
             catch (Exception ex)
             {
                 return InternalServerError(ex);
             }
-        }
-        [HttpGet()]
-        [AllowAnonymous]
-        public async Task<IHttpActionResult> GetAllCountries()
-        {
-            return Ok<CountryCollectionModel>(await services.GetAllCountries());
         }
     }
 }

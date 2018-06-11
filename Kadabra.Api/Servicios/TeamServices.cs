@@ -5,6 +5,7 @@ using Kadabra.Model.Team.Services;
 using Kadabra.Model.Team;
 using Kadabra.Data;
 using Kadabra.Data.Identity;
+using Kadabra.Model.Country;
 
 namespace Kadabra.Api.Servicios
 {
@@ -21,7 +22,7 @@ namespace Kadabra.Api.Servicios
         {
             await repository.Add(new KadabraTeam()
             {
-                Country = team.Country,
+                CountryId = team.Country,
                 ImageFlag = team.ImageFlag,
                 Name = team.Name,
                 TeamKey = team.TeamKey,
@@ -34,7 +35,7 @@ namespace Kadabra.Api.Servicios
             await repository.Update<KadabraTeam>(new KadabraTeam()
             {
                 Id= team.Id,
-                Country = team.Country,
+                CountryId = team.Country,
                 ImageFlag = team.ImageFlag,
                 Name = team.Name,
                 TeamKey = team.TeamKey
@@ -46,8 +47,8 @@ namespace Kadabra.Api.Servicios
             var entities = await repository.GetAll<KadabraTeam>();
             var teams = entities.Select(team => new TeamModel()
             {
-                Country = team.Country,
                 Id = team.Id,
+                Country = team.Country.Name,
                 ImageFlag = team.ImageFlag,
                 Name = team.Name,
                 TeamKey = team.TeamKey
@@ -64,7 +65,7 @@ namespace Kadabra.Api.Servicios
             KadabraTeam team = await repository.FindOne<KadabraTeam>(f => f.Id == model.Id);
             return new TeamModel()
             {
-                Country = team.Country,
+                Country = team.Country.Name,
                 Id = team.Id,
                 ImageFlag = team.ImageFlag,
                 Name = team.Name,
@@ -89,6 +90,11 @@ namespace Kadabra.Api.Servicios
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        public async Task<CountryCollectionModel> GetAllCountries()
+        {
+            return await new CountryServices(repository).GetAllCountries();
         }
     }
 }

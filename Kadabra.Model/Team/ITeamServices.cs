@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kadabra.Model.Country;
+using System;
 using System.Threading.Tasks;
 
 namespace Kadabra.Model.Team.Services
@@ -10,5 +11,6 @@ namespace Kadabra.Model.Team.Services
         Task Add(TeamAddModel team);
         Task<TeamCollectionModel> GetAll();
         Task<TeamModel> Get(TeamIdModel model);
+        Task<CountryCollectionModel> GetAllCountries();
     }
 }

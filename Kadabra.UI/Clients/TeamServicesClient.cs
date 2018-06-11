@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using Kadabra.Model.Team.Services;
 using Kadabra.Model.Team;
 using System.Net.Http.Headers;
-using System.Net.Http.Formatting;
+using Kadabra.Model.Country;
 
-namespace Kadabra.UI.Controllers
+namespace Kadabra.UI.Clients
 {
     //[Dependency("ITeamServices", LoadHint.Always)]
     internal class TeamServicesClient : ITeamServices
@@ -42,6 +42,15 @@ namespace Kadabra.UI.Controllers
             else
                 return new TeamCollectionModel();
         }
+        public async Task<CountryCollectionModel> GetAllCountries()
+        {
+            HttpResponseMessage response = await apiClient.GetAsync("Kadabra/Team/GetAllCountries");
+            if (response.IsSuccessStatusCode)
+                return await response.Content.ReadAsAsync<CountryCollectionModel>();
+            else
+                return new CountryCollectionModel();
+        }
+
         public async Task<TeamModel> Get(TeamIdModel teamId)
         {
             HttpResponseMessage response = await apiClient.PostAsJsonAsync("Kadabra/Team/Get", teamId);
@@ -50,7 +59,6 @@ namespace Kadabra.UI.Controllers
             else
                 return null;
         }
-
         public async Task Remove(TeamIdModel team)
         {
             HttpResponseMessage response = await apiClient.PostAsJsonAsync("Kadabra/Team/DeleteTeam", team);

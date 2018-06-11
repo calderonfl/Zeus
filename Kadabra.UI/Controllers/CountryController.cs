@@ -1,63 +1,63 @@
 ﻿using Kadabra.Model.Country;
-using Kadabra.Model.Team;
-using Kadabra.Model.Team.Services;
+using Kadabra.Model.Country.Services;
 using Kadabra.UI.Clients;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Kadabra.UI.Controllers
 {
-    public class TeamController : Controller
+    public class CountryController : Controller
     {
-        private readonly ITeamServices teamService;
-        public TeamController()
+        private readonly ICountryServices CountryService;
+        public CountryController()
         {
-            teamService = new TeamServicesClient();
+            CountryService = new CountryServicesClient();
         }
 
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            TeamCollectionModel model = await teamService.GetAll();
+            CountryCollectionModel model = await CountryService.GetAllCountries();
             return View(model);
         }
+
         [HttpGet]
         public async Task<ActionResult> Add()
         {
-            ViewBag.Countries = await teamService.GetAllCountries();
             return await Task.Run(() => View());
         }
         [HttpPost]
-        public async Task<ActionResult> Edit(TeamIdModel team)
+        public async Task<ActionResult> Edit(CountryIdModel Country)
         {
-            TeamModel model = await teamService.Get(team);
+            CountryModel model = await CountryService.GetCountry(Country);
             return View(model);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Delete(TeamIdModel team)
+        public async Task<ActionResult> Delete(CountryIdModel Country)
         {
-            await teamService.Remove(team);
+            //CountryModel model = await CountryService.Get(Country);
+            await CountryService.Remove(Country);
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public async Task<ActionResult> SaveTeam(TeamModel team)
+        public async Task<ActionResult> SaveCountry(CountryModel Country)
         {
             if (ModelState.IsValid)
             {
-                await teamService.Edit(team);
+                await CountryService.Edit(Country);
                 return RedirectToAction("Index");
             }
             return View("Edit");
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddTeam(TeamAddModel team)
+        public async Task<ActionResult> AddCountry(CountryAddModel Country)
         {
             if (ModelState.IsValid)
             {
-                await teamService.Add(team);
+                await CountryService.Add(Country);
                 return RedirectToAction("Index");
             }
             return View("Add");
