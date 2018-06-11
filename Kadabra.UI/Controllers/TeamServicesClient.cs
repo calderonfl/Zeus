@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Kadabra.Model.Team.Services;
 using Kadabra.Model.Team;
 using System.Net.Http.Headers;
+using System.Net.Http.Formatting;
 
 namespace Kadabra.UI.Controllers
 {
@@ -27,9 +28,10 @@ namespace Kadabra.UI.Controllers
             response.EnsureSuccessStatusCode();
         }
 
-        public Task Edit(TeamModel team)
+        public async Task Edit(TeamModel team)
         {
-            throw new System.NotImplementedException();
+            HttpResponseMessage response = await apiClient.PostAsJsonAsync("Kadabra/Team/EditTeam", team);
+            response.EnsureSuccessStatusCode();
         }
 
         public async Task<TeamCollectionModel> GetAll()
@@ -40,10 +42,19 @@ namespace Kadabra.UI.Controllers
             else
                 return new TeamCollectionModel();
         }
-
-        public Task Remove(TeamModel team)
+        public async Task<TeamModel> Get(TeamIdModel teamId)
         {
-            throw new System.NotImplementedException();
+            HttpResponseMessage response = await apiClient.PostAsJsonAsync("Kadabra/Team/Get", teamId);
+            if (response.IsSuccessStatusCode)
+                return await response.Content.ReadAsAsync<TeamModel>();
+            else
+                return null;
+        }
+
+        public async Task Remove(TeamIdModel team)
+        {
+            HttpResponseMessage response = await apiClient.PostAsJsonAsync("Kadabra/Team/DeleteTeam", team);
+            response.EnsureSuccessStatusCode();
         }
 
         private bool disposedValue = false;
@@ -68,13 +79,6 @@ namespace Kadabra.UI.Controllers
             GC.SuppressFinalize(this);
         }
 
-        public async Task<TeamModel> Get(TeamIdModel teamId)
-        {
-            HttpResponseMessage response = await apiClient.PostAsJsonAsync("Kadabra/Team/Get", teamId);
-            if (response.IsSuccessStatusCode)
-                return await response.Content.ReadAsAsync<TeamModel>();
-            else
-                return null;
-        }
+        
     }
 }

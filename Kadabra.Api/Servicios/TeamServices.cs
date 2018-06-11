@@ -27,6 +27,7 @@ namespace Kadabra.Api.Servicios
                 TeamKey = team.TeamKey,
                 Id= Guid.NewGuid().ToString()
             });
+            await repository.Save();
         }
         public async Task Edit(TeamModel team)
         {
@@ -38,6 +39,7 @@ namespace Kadabra.Api.Servicios
                 Name = team.Name,
                 TeamKey = team.TeamKey
             });
+            await repository.Save();
         }
         public async Task<TeamCollectionModel> GetAll()
         {
@@ -52,11 +54,23 @@ namespace Kadabra.Api.Servicios
             });
             return new TeamCollectionModel(teams);
         }
-        public async Task Remove(TeamModel team)
+        public async Task Remove(TeamIdModel team)
         {
             await repository.Delete<KadabraTeam>(t => t.Id == team.Id);
+            await repository.Save();
         }
-        
+        public async Task<TeamModel> Get(TeamIdModel model)
+        {
+            KadabraTeam team = await repository.FindOne<KadabraTeam>(f => f.Id == model.Id);
+            return new TeamModel()
+            {
+                Country = team.Country,
+                Id = team.Id,
+                ImageFlag = team.ImageFlag,
+                Name = team.Name,
+                TeamKey = team.TeamKey
+            };
+        }
         protected void Dispose(bool disposing)
         {
             if (disposedValue)
@@ -71,24 +85,10 @@ namespace Kadabra.Api.Servicios
         {
             Dispose(false);
         }
-
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        public async Task<TeamModel> Get(TeamIdModel model)
-        {
-            KadabraTeam team = await repository.FindOne<KadabraTeam>(f => f.Id == model.Id);
-            return new TeamModel()
-            {
-                Country = team.Country,
-                Id = team.Id,
-                ImageFlag = team.ImageFlag,
-                Name = team.Name,
-                TeamKey = team.TeamKey
-            };
         }
     }
 }

@@ -9,7 +9,6 @@ namespace Kadabra.Data
     public interface IRepository
     {
         IUnitOfWork UnitOfWork { get; }
-        Task<TEntity> Save<TEntity>(TEntity entity) where TEntity : class;
         Task<TEntity> Add<TEntity>(TEntity entity) where TEntity : class;
         Task<TEntity> Attach<TEntity>(TEntity entity) where TEntity : class;
         Task<int> Count<TEntity>() where TEntity : class;
@@ -26,5 +25,6 @@ namespace Kadabra.Data
         Task<IQueryable<TEntity>> GetQuery<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class;
         Task<TEntity> Single<TEntity>(Expression<Func<TEntity, bool>> criteria) where TEntity : class;
         Task<TEntity> Update<TEntity>(TEntity entity) where TEntity : class;
+        Task Save();
     }
 }

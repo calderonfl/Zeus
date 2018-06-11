@@ -41,29 +41,48 @@ namespace Kadabra.Api.Controllers
         [AllowAnonymous]
         public async Task<IHttpActionResult> AddTeam(TeamAddModel team)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return this.InternalServerError();
+            try
             {
-                try
-                {
-                    await services.Add(team);
-                    return Ok();
-                }
-                catch (Exception ex)
-                {
-                    return InternalServerError(ex);
-                }
+                await services.Add(team);
+                return Ok();
             }
-            return this.InternalServerError();
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IHttpActionResult> EditTeam(TeamModel team)
         {
+            if (!ModelState.IsValid) return InternalServerError();
+            try
+            {
+                await services.Edit(team);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
-        // DELETE api/<controller>/5
-        public void Delete(int id)
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IHttpActionResult> DeleteTeam(TeamIdModel team)
         {
+            if (!ModelState.IsValid) return InternalServerError();
+            try
+            {
+                await services.Remove(team);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }

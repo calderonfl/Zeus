@@ -9,6 +9,7 @@
     <title>Kadabra</title>
     @Styles.Render("~/Bundles/bootstrap/css")
     @Styles.Render("~/Bundles/admin/css")
+    @RenderSection("Styles", false)
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
     <!-- Navigation-->
@@ -265,9 +266,11 @@
                 </div>
             </div>
         </div>
-        @Styles.Render("~/Bundles/jquery")
-        @Styles.Render("~/Bundles/bootstrap/js")
-        @Styles.Render("~/Bundles/admin/js")
+        @Scripts.Render("~/Bundles/jquery/js")
+        @Scripts.Render("~/Bundles/bootstrap/js")
+        @Scripts.Render("~/Bundles/admin/js")
+        
+
         @RenderSection("Scripts", false)
     </div>
 </body>

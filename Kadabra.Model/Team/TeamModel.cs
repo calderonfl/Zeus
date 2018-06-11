@@ -11,10 +11,10 @@ namespace Kadabra.Model.Team
     {
         public string Id { get; set; }
         [Display(Name="Nombre")]
-        [StringLength(128, MinimumLength = 15)]
+        [StringLength(128, MinimumLength = 3)]
         public string Name { get; set; }
         [Display(Name = "País")]
-        [StringLength(128, MinimumLength = 15)]
+        [StringLength(128, MinimumLength = 3)]
         public string Country { get; set; }
         [Display(Name = "Acrónimo")]
         [StringLength(3, MinimumLength = 3)]

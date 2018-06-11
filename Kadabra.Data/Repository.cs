@@ -5,7 +5,6 @@ using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Data.Entity.Design.PluralizationServices;
 using System.Data.Entity.Infrastructure;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
@@ -15,23 +14,9 @@ namespace Kadabra.Data
 {
     public class Repository : IRepository
     {
-        private KadabraContext context;
-
+        private DbContext context;
         private readonly PluralizationService pluralizer = PluralizationService.CreateService(CultureInfo.GetCultureInfo("en-us"));
         private IUnitOfWork unitOfWork;
-
-        public async Task Agregar(KadabraTeam team)
-        {
-            try
-            {
-                context.Set<KadabraTeam>().Add(team);
-                await context.SaveChangesAsync();
-
-            }catch(Exception ex)
-            {
-                EventLog.WriteEntry("aplicacion", ex.Message, EventLogEntryType.Error);
-            }
-        }
 
         public IUnitOfWork UnitOfWork
         {
@@ -48,7 +33,7 @@ namespace Kadabra.Data
         {
             context = new KadabraContext();
         }
-        public Repository(KadabraContext context)
+        public Repository(DbContext context)
         {
             if (context == null)
                 throw new ArgumentNullException("context");
@@ -108,9 +93,7 @@ namespace Kadabra.Data
             {
                 throw new ArgumentNullException("entity");
             }
-            entity = context.Set<TEntity>().Add(entity);
-            await context.SaveChangesAsync();
-            return entity;
+            return await Task.Run(() => context.Set<TEntity>().Add(entity));
         }
 
         public async Task<TEntity> Attach<TEntity>(TEntity entity) where TEntity : class
@@ -119,9 +102,7 @@ namespace Kadabra.Data
             {
                 throw new ArgumentNullException("entity");
             }
-            context.Set<TEntity>().Attach(entity);
-            await context.SaveChangesAsync();
-            return entity;
+            return await Task.Run(() => context.Set<TEntity>().Attach(entity));
         }
 
         public async Task<TEntity> Delete<TEntity>(TEntity entity) where TEntity : class
@@ -130,7 +111,7 @@ namespace Kadabra.Data
             {
                 throw new ArgumentNullException("entity");
             }
-            return await Task<TEntity>.Run(() => context.Set<TEntity>().Remove(entity));
+            return await Task.Run(() => context.Set<TEntity>().Remove(entity));
         }
 
         public async Task Delete<TEntity>(Expression<Func<TEntity, bool>> criteria) where TEntity : class
@@ -140,6 +121,7 @@ namespace Kadabra.Data
             {
                 await Delete<TEntity>(record);
             }
+            await context.SaveChangesAsync();
         }
 
         public async Task<TEntity> Update<TEntity>(TEntity entity) where TEntity : class
@@ -149,7 +131,7 @@ namespace Kadabra.Data
             EntityKey key = ((IObjectContextAdapter)context).ObjectContext.CreateEntityKey(fqen, entity);
             if (((IObjectContextAdapter)context).ObjectContext.TryGetObjectByKey(key, out originalItem))
             {
-                return await Task<TEntity>.Run(() => ((IObjectContextAdapter)context).ObjectContext.ApplyCurrentValues(key.EntitySetName, entity));
+                await Task.Run(() => ((IObjectContextAdapter)context).ObjectContext.ApplyCurrentValues(key.EntitySetName, entity));
             }
             return default(TEntity);
         }
@@ -197,11 +179,9 @@ namespace Kadabra.Data
             return (await GetQuery<TEntity>(criteria)).Count();
         }
 
-        public async Task<TEntity> Save<TEntity>(TEntity entity) where TEntity : class
-        {
-            entity = await Add<TEntity>(entity);
-            context.SaveChanges();
-            return entity;
+        public async Task Save()
+        { 
+            await context.SaveChangesAsync();
         }
     }
 }

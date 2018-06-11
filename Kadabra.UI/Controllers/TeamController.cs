@@ -13,26 +13,52 @@ namespace Kadabra.UI.Controllers
             teamService = new TeamServicesClient();
         }
 
-        // GET: Team
         [HttpGet]
         public async Task<ActionResult> Index()
         {
             TeamCollectionModel model = await teamService.GetAll();
             return View(model);
         }
+        [HttpGet]
+        public async Task<ActionResult> Add()
+        {
+            return await Task.Run(() => View());
+        }
+        [HttpPost]
+        public async Task<ActionResult> Edit(TeamIdModel team)
+        {
+            TeamModel model = await teamService.Get(team);
+            return View(model);
+        }
 
         [HttpPost]
-        public async Task<ActionResult> AddTeam()
+        public async Task<ActionResult> Delete(TeamIdModel team)
         {
-            await teamService.Add(new TeamAddModel() { Country="Costa Rica", ImageFlag="", Name= "Costa Rica", TeamKey="CRC" });
+            //TeamModel model = await teamService.Get(team);
+            await teamService.Remove(team);
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(TeamIdModel idModel)
+        public async Task<ActionResult> SaveTeam(TeamModel team)
         {
-            TeamModel model = await teamService.Get(idModel);
-            return View(model);
+            if (ModelState.IsValid)
+            {
+                await teamService.Edit(team);
+                return RedirectToAction("Index");
+            }
+            return View("Edit");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddTeam(TeamAddModel team)
+        {
+            if (ModelState.IsValid)
+            {
+                await teamService.Add(team);
+                return RedirectToAction("Index");
+            }
+            return View("Add");
         }
     }
 }

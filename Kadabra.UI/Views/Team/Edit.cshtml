@@ -1,65 +1,67 @@
 ﻿@model Kadabra.Model.Team.TeamModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.TitleOption = "Equipos / Editar";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
-<h2>Edit</h2>
-
-
-@using (Html.BeginForm("SaveEditTeam", "Team"))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TeamKey, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TeamKey, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TeamKey, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ImageFlag, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ImageFlag, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ImageFlag, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Guardar" class="btn btn-default" />
-            </div>
+<div class="container">
+    <div class="card">
+        <div class="card-header">Crear Equipo</div>
+        <div class="card-body">
+            @using (Html.BeginForm("SaveTeam", "Team", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col" })
+                        <div class="col">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Nombre" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col" })
+                        <div class="col">
+                            @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control", placeholder = "País" } })
+                            @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TeamKey, htmlAttributes: new { @class = "control-label col" })
+                        <div class="col">
+                            @Html.EditorFor(model => model.TeamKey, new { htmlAttributes = new { @class = "form-control", placeholder = "Acrónimo" } })
+                            @Html.ValidationMessageFor(model => model.TeamKey, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ImageFlag, htmlAttributes: new { @class = "control-label col" })
+                        <div class="col">
+                            @Html.EditorFor(model => model.ImageFlag, new { htmlAttributes = new { @class = "form-control", placeholder = "Url" } })
+                            @Html.ValidationMessageFor(model => model.ImageFlag, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row justify-content-center align-items-center">
+                        <div class="form-group">
+                            <div class="col">
+                                <button type="submit" class="btn-sm btn-outline-primary" formmethod="post">
+                                    <i class="fa fa-fw fa-save"></i>Guardar
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col">
+                                <button type="button" onclick="location.href='@Url.Action("Index", "Team")'" class="btn-sm btn-outline-secondary">
+                                    <i class="fa fa-fw fa-backward"></i>Regresar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

@@ -5,8 +5,12 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
 }
-<div class="table-responsive">
-        <table class="table-sm table-striped table-hover text-center">
+@section Styles
+{
+    @Styles.Render("~/Bundles/datatable/css")
+}
+    <div class="table-responsive-sm col-sm-10">
+        <table id="MainTable" class="table table-sm table-hover text-center">
             <thead class="thead-dark">
                 <tr>
                     <th>Nombre</th>
@@ -37,8 +41,12 @@
                             <div class="btn-group-sm">
                                 <form>
                                     @Html.Hidden("Id", item.Id)
-                                    <button class="btn-sm btn-outline-secondary" type="submit" formaction="/Kadabra.UI/Team/Edit" formmethod="post">Editar</button>
-                                    <button class="btn-sm btn-outline-danger" type="submit" formaction="/Kadabra.UI/Team/DeleteTeam" formmethod="delete">Eliminar</button>
+                                    <button class="btn-sm btn-outline-secondary" type="submit" formaction="/Kadabra.UI/Team/Edit" formmethod="post">
+                                        <i class="fa fa-fw fa-edit"></i>Editar
+                                    </button>
+                                    <button class="btn-sm btn-outline-danger" type="submit" formaction="/Kadabra.UI/Team/Delete" formmethod="post">
+                                        <i class="fa fa-fw fa-remove"></i>Eliminar
+                                    </button>
                                 </form>
                             </div>
                         </td>
@@ -48,13 +56,34 @@
             <tfoot>
                 <tr>
                     <td>
-                        <br />
-                        <!--button-- class="btn-sm btn-outline-secondary" type="submit" form="FormEdit">Editar</!--button-->
-                        <input type="submit" class="btn-sm btn-outline-primary " value="Agregar" />
+                        
                     </td>
                 </tr>
             </tfoot>
         </table>
-    
-</div>
-
+        
+    </div>
+    <button type="submit" class="btn-sm btn-outline-primary clearfix" data-content="" onclick="location.href='@Url.Action("Add", "Team")'">
+        <i class="fa fa-fw fa-plus"></i>Agregar
+    </button>
+    @section Scripts
+{
+        @Scripts.Render("~/Bundles/datatable/js")
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#MainTable').DataTable({
+                    "language": {
+                        "lengthMenu": "Mostrando _MENU_ registros por página",
+                        "zeroRecords": "No se ha encontrado nada",
+                        "info": "Mostrando página _PAGE_ de _PAGES_",
+                        "infoEmpty": "No hay registros",
+                        "infoFiltered": "(Filtrado de _MAX_ total de registros)",
+                        "paginate": {
+                            "previous": "Atrás",
+                            "next": "Siguiente"
+                        }
+                    }
+                });
+            });
+        </script>
+    }

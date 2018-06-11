@@ -6,7 +6,7 @@ namespace Kadabra.Model.Team.Services
     public interface ITeamServices : IDisposable
     {
         Task Edit(TeamModel team);
-        Task Remove(TeamModel team);
+        Task Remove(TeamIdModel team);
         Task Add(TeamAddModel team);
         Task<TeamCollectionModel> GetAll();
         Task<TeamModel> Get(TeamIdModel model);
