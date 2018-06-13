@@ -101,6 +101,9 @@
     <Compile Include="KadabraPrediction.cs" />
     <Compile Include="KadabraPredictions.cs" />
     <Compile Include="KadabraPredictionStatus.cs" />
+    <Compile Include="KadabraScore.cs" />
+    <Compile Include="KadabraStadium.cs" />
+    <Compile Include="KadabraStadiums.cs" />
     <Compile Include="KadabraTeam.cs" />
     <Compile Include="KadabraTeams.cs" />
     <Compile Include="KadabraTeamWinner.cs" />
@@ -112,9 +115,9 @@
     <Compile Include="KadabraUserTournament.cs" />
     <Compile Include="KadabraUserTournaments.cs" />
     <Compile Include="KadabraLeagueStatus.cs" />
-    <Compile Include="Migrations\201806111946144_Inicial.cs" />
-    <Compile Include="Migrations\201806111946144_Inicial.Designer.cs">
-      <DependentUpon>201806111946144_Inicial.cs</DependentUpon>
+    <Compile Include="Migrations\201806131437460_Inicial.cs" />
+    <Compile Include="Migrations\201806131437460_Inicial.Designer.cs">
+      <DependentUpon>201806131437460_Inicial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -139,8 +142,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201806111946144_Inicial.resx">
-      <DependentUpon>201806111946144_Inicial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201806131437460_Inicial.resx">
+      <DependentUpon>201806131437460_Inicial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

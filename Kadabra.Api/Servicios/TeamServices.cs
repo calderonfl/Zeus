@@ -6,15 +6,16 @@ using Kadabra.Model.Team;
 using Kadabra.Data;
 using Kadabra.Data.Identity;
 using Kadabra.Model.Country;
+using System.Data.Entity;
 
 namespace Kadabra.Api.Servicios
 {
     internal class TeamServices : ITeamServices
     {
         private bool disposedValue = false;
-        private readonly IRepository repository;
+        private readonly IRepository<KadabraTeam> repository;
 
-        public TeamServices(IRepository repository)
+        public TeamServices(IRepository<KadabraTeam> repository)
         {
             this.repository = repository;
         }
@@ -32,7 +33,7 @@ namespace Kadabra.Api.Servicios
         }
         public async Task Edit(TeamModel team)
         {
-            await repository.Update<KadabraTeam>(new KadabraTeam()
+            await repository.Update(new KadabraTeam()
             {
                 Id= team.Id,
                 CountryId = team.Country,
@@ -44,7 +45,7 @@ namespace Kadabra.Api.Servicios
         }
         public async Task<TeamCollectionModel> GetAll()
         {
-            var entities = await repository.GetAll<KadabraTeam>();
+            var entities = (await repository.GetQuery()).Include<KadabraTeam, KadabraCountry>(f => f.Country);
             var teams = entities.Select(team => new TeamModel()
             {
                 Id = team.Id,
@@ -57,12 +58,12 @@ namespace Kadabra.Api.Servicios
         }
         public async Task Remove(TeamIdModel team)
         {
-            await repository.Delete<KadabraTeam>(t => t.Id == team.Id);
+            await repository.Delete(t => t.Id == team.Id);
             await repository.Save();
         }
         public async Task<TeamModel> Get(TeamIdModel model)
         {
-            KadabraTeam team = await repository.FindOne<KadabraTeam>(f => f.Id == model.Id);
+            KadabraTeam team = await repository.FindOne(f => f.Id == model.Id);
             return new TeamModel()
             {
                 Country = team.Country.Name,
@@ -71,6 +72,10 @@ namespace Kadabra.Api.Servicios
                 Name = team.Name,
                 TeamKey = team.TeamKey
             };
+        }
+        public async Task<CountryCollectionModel> GetAllCountries()
+        {
+            return await new CountryServices(new RepositoryCountry()).GetAllCountries();
         }
         protected void Dispose(bool disposing)
         {
@@ -92,9 +97,6 @@ namespace Kadabra.Api.Servicios
             GC.SuppressFinalize(this);
         }
 
-        public async Task<CountryCollectionModel> GetAllCountries()
-        {
-            return await new CountryServices(repository).GetAllCountries();
-        }
+        
     }
 }

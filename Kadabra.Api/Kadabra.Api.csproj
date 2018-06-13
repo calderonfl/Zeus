@@ -207,8 +207,10 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\StadiumController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Servicios\CountryServices.cs" />
+    <Compile Include="Servicios\StadiumServices.cs" />
     <Compile Include="Servicios\TeamServices.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">

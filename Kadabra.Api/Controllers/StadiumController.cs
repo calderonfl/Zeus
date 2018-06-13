@@ -1,49 +1,49 @@
 ﻿using System.Web.Http;
-using Kadabra.Model.Country;
+using Kadabra.Model.Stadium;
 using System.Threading.Tasks;
-using Kadabra.Model.Country.Services;
+using Kadabra.Model.Stadium.Services;
 using Kadabra.Api.Servicios;
 using Kadabra.Data;
 using System;
 
 namespace Kadabra.Api.Controllers
 {
-    [RoutePrefix("Country")]
-    public class CountryController : ApiController
+    [RoutePrefix("Stadium")]
+    public class StadiumController : ApiController
     {
-        private readonly ICountryServices services;
+        private readonly IStadiumServices services;
 
-        public CountryController() : this(new CountryServices(new RepositoryCountry()))
+        public StadiumController() : this(new StadiumServices(new RepositoryStadium()))
         {
 
         }
 
-        public CountryController(ICountryServices services)
+        public StadiumController(IStadiumServices services)
         {
             this.services = services;
         }
 
         [HttpGet()]
         [AllowAnonymous]
-        public async Task<IHttpActionResult> GetAllCountries()
+        public async Task<IHttpActionResult> GetAllStadiums()
         {
-            return Ok<CountryCollectionModel>(await services.GetAllCountries());
+            return Ok<StadiumCollectionModel>(await services.GetAllStadiums());
         }
         [HttpPost]
         [AllowAnonymous]
-        public async Task<CountryModel> GetCountry(CountryIdModel model)
+        public async Task<StadiumModel> GetStadium(StadiumIdModel stadium)
         {
-            return await services.GetCountry(model);
+            return await services.GetStadium(stadium);
         }
 
         [HttpPost()]
         [AllowAnonymous]
-        public async Task<IHttpActionResult> AddCountry(CountryAddModel country)
+        public async Task<IHttpActionResult> AddStadium(StadiumAddModel stadium)
         {
             if (!ModelState.IsValid) return this.InternalServerError();
             try
             {
-                await services.Add(country);
+                await services.Add(stadium);
                 return Ok();
             }
             catch (Exception ex)
@@ -54,12 +54,12 @@ namespace Kadabra.Api.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IHttpActionResult> EditCountry(CountryModel country)
+        public async Task<IHttpActionResult> EditStadium(StadiumModel stadium)
         {
             if (!ModelState.IsValid) return InternalServerError();
             try
             {
-                await services.Edit(country);
+                await services.Edit(stadium);
                 return Ok();
             }
             catch (Exception ex)
@@ -70,12 +70,12 @@ namespace Kadabra.Api.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IHttpActionResult> DeleteCountry(CountryIdModel country)
+        public async Task<IHttpActionResult> DeleteStadium(StadiumIdModel stadium)
         {
             if (!ModelState.IsValid) return InternalServerError();
             try
             {
-                await services.Remove(country);
+                await services.Remove(stadium);
                 return Ok();
             }
             catch (Exception ex)

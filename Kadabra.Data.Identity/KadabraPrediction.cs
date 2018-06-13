@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Kadabra.Data.Identity
 {
@@ -12,9 +13,8 @@ namespace Kadabra.Data.Identity
         public int? ScoreAway { get; set; }
         public int? Points { get; private set; }
         public int? MaxPoints { get; set; }
-        public int DescribeContents => 0;
-        public string UserId { get; set; }
-        public KadabraUser User { get; set; }
+        public string UserTournamentId { get; set; }
+        public KadabraUserTournament User { get; set; }
         public KadabraTeamWinner GetWinner()
         {
             if (ScoreHome > ScoreAway)
@@ -27,7 +27,7 @@ namespace Kadabra.Data.Identity
         {
             if(Match.MatchStatus == KadabraMatchStatus.MatchStatusFinished)
             {
-                if (ScoreHome == Match.ScoreHome && ScoreAway == Match.ScoreAway)
+                if (ScoreHome == Match.Score?.ScoreHome && ScoreAway == Match.Score?.ScoreAway)
                     return KadabraPredictionStatus.MatchStatusExact;
                 else
                     return CalculatePointsNotExactResult();

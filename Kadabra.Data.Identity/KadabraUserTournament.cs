@@ -21,5 +21,6 @@ namespace Kadabra.Data.Identity
         public KadabraTournament Tournament { get; set; }
         public string UserId { get; set; }
         public KadabraUser User { get; set; }
+        public KadabraPredictions Predictions { get; set; }
     }
 }

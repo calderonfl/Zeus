@@ -14,7 +14,7 @@ namespace Kadabra.Api.Controllers
     {
         private readonly ITeamServices services;
 
-        public TeamController() : this(new TeamServices(new Repository()))
+        public TeamController() : this(new TeamServices(new RepositoryTeam()))
         {
 
         }

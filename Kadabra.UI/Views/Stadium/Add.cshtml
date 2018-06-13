@@ -1,0 +1,97 @@
+﻿@model Kadabra.Model.Stadium.StadiumAddModelWithCountries
+
+@{
+    ViewBag.TitleOption = "Estadios / Agregar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container">
+    <div class="card">
+        <div class="card-header">Crear Estadio</div>
+        <div class="card-body">
+            @using (Html.BeginForm("AddStadium", "Stadium", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col" })
+                        <div class="col">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Nombre" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col" })
+                        <div class="col">
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", placeholder = "Descripción" } })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Capacity, htmlAttributes: new { @class = "control-label col" })
+                        <div class="col">
+                            @Html.EditorFor(model => model.Capacity, new { htmlAttributes = new { @class = "form-control", placeholder = "Capacidad" } })
+                            @Html.ValidationMessageFor(model => model.Capacity, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CountryId, htmlAttributes: new { @class = "control-label col" })
+                        <div class="col">
+                            <div class="btn-group">
+                                <button id="CountriesSelect" type="button" class="btn btn-sm">Sin selección</button>
+                                <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div id="cboCountry" class="dropdown-menu">
+                                    <a class="dropdown-item active">Sin selección</a>
+                                    @foreach (Kadabra.Model.Country.CountryModel country in Model.Countries)
+                                    {
+                                        <a class="dropdown-item" id="@country.Id">@country.Name</a>
+                                    }
+                                </div>
+                            </div>
+                            @Html.HiddenFor(model => model.CountryId, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row justify-content-center align-items-center">
+                        <div class="form-group">
+                            <div class="col">
+                                <button type="submit" class="btn-sm btn-outline-primary">
+                                    <i class="fa fa-fw fa-plus"></i>Agregar
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col">
+                                <button type="button" onclick="location.href='@Url.Action("Index", "Stadium")'" class="btn-sm btn-outline-secondary">
+                                    <i class="fa fa-fw fa-backward"></i>Regresar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#cboCountry a').click(function () {
+                $('#cboCountry a.active').removeClass('active');
+                $('#CountriesSelect').text($(this).text());
+                $('#CountriesSelect').val($(this).text());
+                $(this).addClass('active');
+                if ($(this).text() != 'Sin selección') {
+                    $('#CountryId').val($(this).attr('id'));
+                } else {
+                    $('#CountryId').val('');
+                }
+            });
+        });
+    </script>
+}

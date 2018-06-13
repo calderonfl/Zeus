@@ -12,9 +12,8 @@ namespace Kadabra.Data.Identity
         public string LastName { get; set; }
         public DateTime Birthday { get; set; }
         public int Level { get; set; }
-        //public KadabraUserTournaments UserTournaments { get; set; }
+        public KadabraUserTournaments UserTournaments { get; set; }
         //public KadabraLeagues Leagues { get; set; }
-        //public KadabraPredictions Predictions { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<KadabraUser> manager, string authenticationType)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

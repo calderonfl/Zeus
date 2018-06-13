@@ -48,11 +48,17 @@
     <Compile Include="Country\CountryModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterBindingModel.cs" />
+    <Compile Include="Stadium\IStadiumServices.cs" />
+    <Compile Include="Stadium\StadiumAddModel.cs" />
+    <Compile Include="Stadium\StadiumCollectionModel.cs" />
+    <Compile Include="Stadium\StadiumIdModel.cs" />
+    <Compile Include="Stadium\StadiumModel.cs" />
     <Compile Include="Team\ITeamServices.cs" />
     <Compile Include="Team\TeamAddModel.cs" />
     <Compile Include="Team\TeamCollectionModel.cs" />
     <Compile Include="Team\TeamModel.cs" />
     <Compile Include="Team\TeamIdModel.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

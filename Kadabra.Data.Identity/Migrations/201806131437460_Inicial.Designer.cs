@@ -13,7 +13,7 @@ namespace Kadabra.Data.Identity.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201806111946144_Inicial"; }
+            get { return "201806131437460_Inicial"; }
         }
         
         string IMigrationMetadata.Source

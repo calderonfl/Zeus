@@ -485,6 +485,8 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Views\Stadium\Add.cshtml" />
+    <Content Include="Views\Stadium\Edit.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -493,8 +495,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Clients\CountryServicesClient.cs" />
+    <Compile Include="Clients\StadiumServicesClient.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
+    <Compile Include="Controllers\StadiumController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Clients\TeamServicesClient.cs" />
     <Compile Include="Global.asax.cs">
@@ -526,6 +530,7 @@
     <Content Include="Views\Country\Index.cshtml" />
     <Content Include="Views\Country\Edit.cshtml" />
     <Content Include="Views\Country\Add.cshtml" />
+    <Content Include="Views\Stadium\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

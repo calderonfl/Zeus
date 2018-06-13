@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Kadabra.Data
 {
-    public class Repository : IRepository
+    public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         private DbContext context;
         private readonly PluralizationService pluralizer = PluralizationService.CreateService(CultureInfo.GetCultureInfo("en-us"));
@@ -40,9 +40,9 @@ namespace Kadabra.Data
             this.context = context;
         }
 
-        private TEntity GetByKey<TEntity>(object keyValue) where TEntity : class
+        private TEntity GetByKey(object keyValue)
         {
-            EntityKey key = GetEntityKey<TEntity>(keyValue);
+            EntityKey key = GetEntityKey(keyValue);
             object originalItem;
             if (((IObjectContextAdapter)context).ObjectContext.TryGetObjectByKey(key, out originalItem))
             {
@@ -50,44 +50,44 @@ namespace Kadabra.Data
             }
             return default(TEntity);
         }
-        private EntityKey GetEntityKey<TEntity>(object keyValue) where TEntity : class
+        private EntityKey GetEntityKey(object keyValue)
         {
-            var entitySetName = GetEntityName<TEntity>();
+            var entitySetName = GetEntityName();
             var objectSet = ((IObjectContextAdapter)context).ObjectContext.CreateObjectSet<TEntity>();
             var keyPropertyName = objectSet.EntitySet.ElementType.KeyMembers[0].ToString();
             var entityKey = new EntityKey(entitySetName, new[] { new EntityKeyMember(keyPropertyName, keyValue) });
             return entityKey;
         }
-        private string GetEntityName<TEntity>() where TEntity : class
+        private string GetEntityName()
         {
             return string.Format("{0}.{1}", ((IObjectContextAdapter)context).ObjectContext.DefaultContainerName, pluralizer.Pluralize(typeof(TEntity).Name));
         }
 
-        public async Task<IQueryable<TEntity>> GetQuery<TEntity>() where TEntity : class
+        public virtual async Task<IQueryable<TEntity>> GetQuery()
         {
             return await Task<IQueryable<TEntity>>.Run(() => 
             {
-                var entityName = GetEntityName<TEntity>();
+                var entityName = GetEntityName();
                 return ((IObjectContextAdapter)context).ObjectContext.CreateQuery<TEntity>(entityName);
             });
         }
 
-        public async Task<IQueryable<TEntity>> GetQuery<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
+        public virtual async Task<IQueryable<TEntity>> GetQuery(Expression<Func<TEntity, bool>> predicate)
         {
-            return (await GetQuery<TEntity>()).Where(predicate);
+            return (await GetQuery()).Where(predicate);
         }
 
-        public async Task<TEntity> Single<TEntity>(Expression<Func<TEntity, bool>> criteria) where TEntity : class
+        public virtual async Task<TEntity> Single(Expression<Func<TEntity, bool>> criteria)
         {
-            return (await GetQuery<TEntity>()).Single<TEntity>(criteria);
+            return (await GetQuery()).Single<TEntity>(criteria);
         }
 
-        public async Task<TEntity> First<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
+        public virtual async Task<TEntity> First(Expression<Func<TEntity, bool>> predicate)
         {
-            return (await GetQuery<TEntity>()).First(predicate);
+            return (await GetQuery()).First(predicate);
         }
 
-        public async Task<TEntity> Add<TEntity>(TEntity entity) where TEntity : class
+        public virtual async Task<TEntity> Add(TEntity entity)
         {
             if (entity == null)
             {
@@ -96,7 +96,7 @@ namespace Kadabra.Data
             return await Task.Run(() => context.Set<TEntity>().Add(entity));
         }
 
-        public async Task<TEntity> Attach<TEntity>(TEntity entity) where TEntity : class
+        public virtual async Task<TEntity> Attach(TEntity entity)
         {
             if (entity == null)
             {
@@ -105,7 +105,7 @@ namespace Kadabra.Data
             return await Task.Run(() => context.Set<TEntity>().Attach(entity));
         }
 
-        public async Task<TEntity> Delete<TEntity>(TEntity entity) where TEntity : class
+        public virtual async Task<TEntity> Delete(TEntity entity)
         {
             if (entity == null)
             {
@@ -114,19 +114,19 @@ namespace Kadabra.Data
             return await Task.Run(() => context.Set<TEntity>().Remove(entity));
         }
 
-        public async Task Delete<TEntity>(Expression<Func<TEntity, bool>> criteria) where TEntity : class
+        public virtual async Task Delete(Expression<Func<TEntity, bool>> criteria)
         {
-            IEnumerable<TEntity> records = await Find<TEntity>(criteria);
+            IEnumerable<TEntity> records = await Find(criteria);
             foreach (TEntity record in records)
             {
-                await Delete<TEntity>(record);
+                await Delete(record);
             }
             await context.SaveChangesAsync();
         }
 
-        public async Task<TEntity> Update<TEntity>(TEntity entity) where TEntity : class
+        public virtual async Task<TEntity> Update(TEntity entity)
         {
-            var fqen = GetEntityName<TEntity>();
+            var fqen = GetEntityName();
             object originalItem;
             EntityKey key = ((IObjectContextAdapter)context).ObjectContext.CreateEntityKey(fqen, entity);
             if (((IObjectContextAdapter)context).ObjectContext.TryGetObjectByKey(key, out originalItem))
@@ -136,50 +136,50 @@ namespace Kadabra.Data
             return default(TEntity);
         }
 
-        public async Task<IEnumerable<TEntity>> Find<TEntity>(Expression<Func<TEntity, bool>> criteria) where TEntity : class
+        public virtual async Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> criteria)
         {
-            return (await GetQuery<TEntity>()).Where(criteria);
+            return (await GetQuery()).Where(criteria);
         }
 
-        public async Task<TEntity> FindOne<TEntity>(Expression<Func<TEntity, bool>> criteria) where TEntity : class
+        public virtual async Task<TEntity> FindOne(Expression<Func<TEntity, bool>> criteria)
         {
-            return (await GetQuery<TEntity>()).Where(criteria).FirstOrDefault();
+            return (await GetQuery()).Where(criteria).FirstOrDefault();
         }
 
-        public async Task<IEnumerable<TEntity>> GetAll<TEntity>() where TEntity : class
+        public virtual async Task<IEnumerable<TEntity>> GetAll()
         {
-            return (await GetQuery<TEntity>()).AsEnumerable();
+            return (await GetQuery()).AsEnumerable();
         }
 
-        public async Task<IEnumerable<TEntity>> Get<TEntity, TOrderBy>(Expression<Func<TEntity, TOrderBy>> orderBy, int pageIndex, int pageSize, SortOrder sortOrder = SortOrder.Ascending) where TEntity : class
-        {
-            if (sortOrder == SortOrder.Ascending)
-            {
-                return (await GetQuery<TEntity>()).OrderBy(orderBy).Skip((pageIndex - 1) * pageSize).Take(pageSize).AsEnumerable();
-            }
-            return (await GetQuery<TEntity>()).OrderByDescending(orderBy).Skip((pageIndex - 1) * pageSize).Take(pageSize).AsEnumerable();
-        }
-
-        public async Task<IEnumerable<TEntity>> Get<TEntity, TOrderBy>(Expression<Func<TEntity, bool>> criteria, Expression<Func<TEntity, TOrderBy>> orderBy, int pageIndex, int pageSize, SortOrder sortOrder = SortOrder.Ascending) where TEntity : class
+        public virtual async Task<IEnumerable<TEntity>> Get<TOrderBy>(Expression<Func<TEntity, TOrderBy>> orderBy, int pageIndex, int pageSize, SortOrder sortOrder = SortOrder.Ascending)
         {
             if (sortOrder == SortOrder.Ascending)
             {
-                return (await GetQuery<TEntity>(criteria)).OrderBy(orderBy).Skip((pageIndex - 1) * pageSize).Take(pageSize).AsEnumerable();
+                return (await GetQuery()).OrderBy(orderBy).Skip((pageIndex - 1) * pageSize).Take(pageSize).AsEnumerable();
             }
-            return (await GetQuery<TEntity>(criteria)).OrderByDescending(orderBy).Skip((pageIndex - 1) * pageSize).Take(pageSize).AsEnumerable();
+            return (await GetQuery()).OrderByDescending(orderBy).Skip((pageIndex - 1) * pageSize).Take(pageSize).AsEnumerable();
         }
 
-        public async Task<int> Count<TEntity>() where TEntity : class
+        public virtual async Task<IEnumerable<TEntity>> Get<TOrderBy>(Expression<Func<TEntity, bool>> criteria, Expression<Func<TEntity, TOrderBy>> orderBy, int pageIndex, int pageSize, SortOrder sortOrder = SortOrder.Ascending)
         {
-            return (await GetQuery<TEntity>()).Count();
+            if (sortOrder == SortOrder.Ascending)
+            {
+                return (await GetQuery(criteria)).OrderBy(orderBy).Skip((pageIndex - 1) * pageSize).Take(pageSize).AsEnumerable();
+            }
+            return (await GetQuery(criteria)).OrderByDescending(orderBy).Skip((pageIndex - 1) * pageSize).Take(pageSize).AsEnumerable();
         }
 
-        public async Task<int> Count<TEntity>(Expression<Func<TEntity, bool>> criteria) where TEntity : class
+        public virtual async Task<int> Count()
         {
-            return (await GetQuery<TEntity>(criteria)).Count();
+            return (await GetQuery()).Count();
         }
 
-        public async Task Save()
+        public virtual async Task<int> Count(Expression<Func<TEntity, bool>> criteria)
+        {
+            return (await GetQuery(criteria)).Count();
+        }
+
+        public virtual async Task Save()
         { 
             await context.SaveChangesAsync();
         }

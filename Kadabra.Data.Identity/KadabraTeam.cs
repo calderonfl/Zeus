@@ -15,7 +15,8 @@ namespace Kadabra.Data.Identity
         public string TeamKey { get; set; }
         public string ImageFlag { get; set; }
         
-        //public KadabraMatches MatchesHome { get; set; }
-        //public KadabraMatches MatchesAway { get; set; }
+        public KadabraMatches MatchesHome { get; set; }
+        public KadabraMatches MatchesAway { get; set; }
+        public KadabraTournaments Tournaments { get; set; }
     }
 }

@@ -6,25 +6,25 @@ using System.Threading.Tasks;
 
 namespace Kadabra.Data
 {
-    public interface IRepository
+    public interface IRepository<TEntity> where TEntity : class
     {
         IUnitOfWork UnitOfWork { get; }
-        Task<TEntity> Add<TEntity>(TEntity entity) where TEntity : class;
-        Task<TEntity> Attach<TEntity>(TEntity entity) where TEntity : class;
-        Task<int> Count<TEntity>() where TEntity : class;
-        Task<int> Count<TEntity>(Expression<Func<TEntity, bool>> criteria) where TEntity : class;
-        Task Delete<TEntity>(Expression<Func<TEntity, bool>> criteria) where TEntity : class;
-        Task<TEntity> Delete<TEntity>(TEntity entity) where TEntity : class;
-        Task<IEnumerable<TEntity>> Find<TEntity>(Expression<Func<TEntity, bool>> criteria) where TEntity : class;
-        Task<TEntity> FindOne<TEntity>(Expression<Func<TEntity, bool>> criteria) where TEntity : class;
-        Task<TEntity> First<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class;
-        Task<IEnumerable<TEntity>> Get<TEntity, TOrderBy>(Expression<Func<TEntity, bool>> criteria, Expression<Func<TEntity, TOrderBy>> orderBy, int pageIndex, int pageSize, SortOrder sortOrder = SortOrder.Ascending) where TEntity : class;
-        Task<IEnumerable<TEntity>> Get<TEntity, TOrderBy>(Expression<Func<TEntity, TOrderBy>> orderBy, int pageIndex, int pageSize, SortOrder sortOrder = SortOrder.Ascending) where TEntity : class;
-        Task<IEnumerable<TEntity>> GetAll<TEntity>() where TEntity : class;
-        Task<IQueryable<TEntity>> GetQuery<TEntity>() where TEntity : class;
-        Task<IQueryable<TEntity>> GetQuery<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class;
-        Task<TEntity> Single<TEntity>(Expression<Func<TEntity, bool>> criteria) where TEntity : class;
-        Task<TEntity> Update<TEntity>(TEntity entity) where TEntity : class;
+        Task<TEntity> Add(TEntity entity);
+        Task<TEntity> Attach(TEntity entity);
+        Task<int> Count();
+        Task<int> Count(Expression<Func<TEntity, bool>> criteria);
+        Task Delete(Expression<Func<TEntity, bool>> criteria);
+        Task<TEntity> Delete(TEntity entity);
+        Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> criteria);
+        Task<TEntity> FindOne(Expression<Func<TEntity, bool>> criteria);
+        Task<TEntity> First(Expression<Func<TEntity, bool>> predicate);
+        Task<IEnumerable<TEntity>> Get<TOrderBy>(Expression<Func<TEntity, bool>> criteria, Expression<Func<TEntity, TOrderBy>> orderBy, int pageIndex, int pageSize, SortOrder sortOrder = SortOrder.Ascending);
+        Task<IEnumerable<TEntity>> Get<TOrderBy>(Expression<Func<TEntity, TOrderBy>> orderBy, int pageIndex, int pageSize, SortOrder sortOrder = SortOrder.Ascending);
+        Task<IEnumerable<TEntity>> GetAll();
+        Task<IQueryable<TEntity>> GetQuery();
+        Task<IQueryable<TEntity>> GetQuery(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity> Single(Expression<Func<TEntity, bool>> criteria);
+        Task<TEntity> Update(TEntity entity);
         Task Save();
     }
 }

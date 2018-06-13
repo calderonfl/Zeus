@@ -11,9 +11,9 @@ namespace Kadabra.Api.Servicios
     internal class CountryServices : ICountryServices
     {
         private bool disposedValue = false;
-        private readonly IRepository repository;
+        private readonly IRepository<KadabraCountry> repository;
 
-        public CountryServices(IRepository repository)
+        public CountryServices(IRepository<KadabraCountry> repository)
         {
             this.repository = repository;
         }
@@ -30,7 +30,7 @@ namespace Kadabra.Api.Servicios
         }
         public async Task Edit(CountryModel country)
         {
-            await repository.Update<KadabraCountry>(new KadabraCountry()
+            await repository.Update(new KadabraCountry()
             {
                 Id = country.Id,
                 ImageFlag = country.ImageFlag,
@@ -41,7 +41,7 @@ namespace Kadabra.Api.Servicios
         }
         public async Task<CountryCollectionModel> GetAllCountries()
         {
-            var entities = await repository.GetAll<KadabraCountry>();
+            var entities = await repository.GetAll();
             var countries = entities.Select(country => new CountryModel()
             {
                 Id = country.Id,
@@ -53,12 +53,12 @@ namespace Kadabra.Api.Servicios
         }
         public async Task Remove(CountryIdModel Country)
         {
-            await repository.Delete<KadabraCountry>(t => t.Id == Country.Id);
+            await repository.Delete(t => t.Id == Country.Id);
             await repository.Save();
         }
         public async Task<CountryModel> GetCountry(CountryIdModel model)
         {
-            KadabraCountry Country = await repository.FindOne<KadabraCountry>(f => f.Id == model.Id);
+            KadabraCountry Country = await repository.FindOne(f => f.Id == model.Id);
             return new CountryModel()
             {
                 Id = Country.Id,

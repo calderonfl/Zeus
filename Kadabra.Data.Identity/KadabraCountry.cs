@@ -12,5 +12,7 @@ namespace Kadabra.Data.Identity
         public string CountryKey { get; set; }
         public string ImageFlag { get; set; }
         public KadabraTeams Teams { get; set; }
+        public KadabraStadiums Stadiums { get; set; }
+        public KadabraTournaments Tournaments { get; set; }
     }
 }
