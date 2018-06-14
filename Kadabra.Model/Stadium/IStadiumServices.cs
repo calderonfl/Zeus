@@ -10,5 +10,8 @@ namespace Kadabra.Model.Stadium.Services
         Task Add(StadiumAddModel stadium);
         Task<StadiumCollectionModel> GetAllStadiums();
         Task<StadiumModel> GetStadium(StadiumIdModel stadium);
+        Task<StadiumModelWithCountries> GetStadiumWithCountries();
+        Task<StadiumModelWithCountries> GetStadiumWithCountries(StadiumIdModel stadium);
+
     }
 }

@@ -42,6 +42,5 @@ namespace Kadabra.Data.Identity
         public string TournamentId { get; set; }
         public KadabraTournament Tournament { get; set; }
         public KadabraPredictions Predictions { get; set; }
-        //public KadabraMatchDay MatchDay { get; set; }
     }
 }

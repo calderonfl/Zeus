@@ -1,5 +1,4 @@
-﻿using Kadabra.Model.Country.Services;
-using Kadabra.Model.Stadium;
+﻿using Kadabra.Model.Stadium;
 using Kadabra.Model.Stadium.Services;
 using Kadabra.UI.Clients;
 using System.Threading.Tasks;
@@ -10,11 +9,9 @@ namespace Kadabra.UI.Controllers
     public class StadiumController : Controller
     {
         private readonly IStadiumServices stadiumService;
-        private readonly ICountryServices countryService;
         public StadiumController()
         {
             stadiumService = new StadiumServicesClient();
-            countryService = new CountryServicesClient();
         }
 
         [HttpGet]
@@ -27,13 +24,13 @@ namespace Kadabra.UI.Controllers
         [HttpGet]
         public async Task<ActionResult> Add()
         {
-            var model = new StadiumAddModelWithCountries() { Countries = await countryService.GetAllCountries() };
-            return View(model);
+            var stadium = await stadiumService.GetStadiumWithCountries();
+            return View(stadium);
         }
         [HttpPost]
         public async Task<ActionResult> Edit(StadiumIdModel stadium)
         {
-            StadiumModel model = await stadiumService.GetStadium(stadium);
+            StadiumModelWithCountries model = await stadiumService.GetStadiumWithCountries(stadium);
             return View(model);
         }
 
@@ -52,7 +49,11 @@ namespace Kadabra.UI.Controllers
                 await stadiumService.Edit(stadium);
                 return RedirectToAction("Index");
             }
-            return View("Edit");
+            else
+            {
+                StadiumModelWithCountries model = await stadiumService.GetStadiumWithCountries(new StadiumIdModel() { Id = stadium.Id});
+                return View("Edit", model);
+            }
         }
 
         [HttpPost]
@@ -63,7 +64,11 @@ namespace Kadabra.UI.Controllers
                 await stadiumService.Add(stadium);
                 return RedirectToAction("Index");
             }
-            return View("Add");
+            else
+            {
+                StadiumModelWithCountries model = await stadiumService.GetStadiumWithCountries();               
+                return View("Add", model);
+            }
         }
     }
 }

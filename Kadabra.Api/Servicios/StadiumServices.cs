@@ -1,5 +1,7 @@
 ﻿using Kadabra.Data;
 using Kadabra.Data.Identity;
+using Kadabra.Model.Country;
+using Kadabra.Model.Country.Services;
 using Kadabra.Model.Stadium;
 using Kadabra.Model.Stadium.Services;
 using System;
@@ -14,10 +16,13 @@ namespace Kadabra.Api.Servicios
     {
         private bool disposedValue = false;
         private readonly IRepository<KadabraStadium> repository;
+        private readonly ICountryServices services;
+
 
         public StadiumServices(IRepository<KadabraStadium> repository)
         {
             this.repository = repository;
+            services = new CountryServices(new RepositoryCountry());
         }
         public async Task Add(StadiumAddModel stadium)
         {
@@ -26,6 +31,7 @@ namespace Kadabra.Api.Servicios
                 Description = stadium.Description,
                 Name = stadium.Name,
                 Capacity = stadium.Capacity,
+                CountryId = stadium.CountryId,
                 Id = Guid.NewGuid().ToString()
             });
             await repository.Save();
@@ -38,6 +44,7 @@ namespace Kadabra.Api.Servicios
                 Id = stadium.Id,
                 Description = stadium.Description,
                 Name = stadium.Name,
+                CountryId = stadium.CountryId,
                 Capacity = stadium.Capacity
             });
             await repository.Save();
@@ -46,11 +53,12 @@ namespace Kadabra.Api.Servicios
         public async Task<StadiumCollectionModel> GetAllStadiums()
         {
             var entities = await repository.GetAll();
-            var stadiums = entities.Select(stadium => new StadiumModel()
+            var stadiums = entities.Select(stadium => new StadiumDisplayModel()
             {
                 Id = stadium.Id,
                 Description = stadium.Description,
                 Name = stadium.Name,
+                Country = stadium.Country.Name,
                 Capacity = stadium.Capacity
             });
             return new StadiumCollectionModel(stadiums);
@@ -64,6 +72,7 @@ namespace Kadabra.Api.Servicios
                 Id = currentStadium.Id,
                 Description = currentStadium.Description,
                 Name = currentStadium.Name,
+                CountryId = currentStadium.CountryId,
                 Capacity = currentStadium.Capacity
             };
         }
@@ -91,6 +100,25 @@ namespace Kadabra.Api.Servicios
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+        public async Task<StadiumModelWithCountries> GetStadiumWithCountries()
+        {
+            return await GetStadiumWithCountries(null);
+        }
+        public async Task<StadiumModelWithCountries> GetStadiumWithCountries(StadiumIdModel stadium)
+        {
+            var countries = await services.GetAllCountries();
+            return await GetStadiumWithCountries(stadium, countries);
+        }
+
+        private async Task<StadiumModelWithCountries> GetStadiumWithCountries(StadiumIdModel stadium, CountryCollectionModel countries)
+        {
+            if (stadium == null) return new StadiumModelWithCountries(countries);
+            else
+            {
+                var model = await this.GetStadium(stadium);
+                return new StadiumModelWithCountries(model, countries);
+            }
         }
     }
 }

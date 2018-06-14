@@ -167,6 +167,7 @@ namespace Kadabra.Data.Identity.Migrations
                         Capacity = c.Int(nullable: false),
                         Description = c.String(maxLength: 128),
                         CountryId = c.String(nullable: false, maxLength: 128),
+                        ImageUrl = c.String(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.KadabraCountry", t => t.CountryId)

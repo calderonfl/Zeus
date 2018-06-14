@@ -3,21 +3,21 @@ using System.Collections.Generic;
 
 namespace Kadabra.Model.Stadium
 {
-    public class StadiumCollectionModel : ICollection<StadiumModel>
+    public class StadiumCollectionModel : ICollection<StadiumDisplayModel>
     {
-        private readonly IList<StadiumModel> stadiums = null;
+        private readonly IList<StadiumDisplayModel> stadiums = null;
 
-        public StadiumCollectionModel() : this(new List<StadiumModel>())
+        public StadiumCollectionModel() : this(new List<StadiumDisplayModel>())
         {
         }
-        public StadiumCollectionModel(IEnumerable<StadiumModel> teamModels)
+        public StadiumCollectionModel(IEnumerable<StadiumDisplayModel> stadiums)
         {
-            this.stadiums = new List<StadiumModel>(teamModels);
+            this.stadiums = new List<StadiumDisplayModel>(stadiums);
         }
 
         public int Count => stadiums.Count;
         public bool IsReadOnly => stadiums.IsReadOnly;
-        public void Add(StadiumModel item)
+        public void Add(StadiumDisplayModel item)
         {
             stadiums.Add(item);
         }
@@ -27,22 +27,22 @@ namespace Kadabra.Model.Stadium
             stadiums.Clear();
         }
 
-        public bool Contains(StadiumModel item)
+        public bool Contains(StadiumDisplayModel item)
         {
             return stadiums.Contains(item);
         }
 
-        public void CopyTo(StadiumModel[] array, int arrayIndex)
+        public void CopyTo(StadiumDisplayModel[] array, int arrayIndex)
         {
             stadiums.CopyTo(array, arrayIndex);
         }
 
-        public IEnumerator<StadiumModel> GetEnumerator()
+        public IEnumerator<StadiumDisplayModel> GetEnumerator()
         {
             return stadiums.GetEnumerator();
         }
 
-        public bool Remove(StadiumModel item)
+        public bool Remove(StadiumDisplayModel item)
         {
             return stadiums.Remove(item);
         }

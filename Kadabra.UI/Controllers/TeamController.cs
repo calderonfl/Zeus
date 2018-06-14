@@ -24,13 +24,13 @@ namespace Kadabra.UI.Controllers
         [HttpGet]
         public async Task<ActionResult> Add()
         {
-            ViewBag.Countries = await teamService.GetAllCountries();
-            return await Task.Run(() => View());
+            var model = await teamService.GetTeamWithCountries();
+            return View(model);
         }
         [HttpPost]
         public async Task<ActionResult> Edit(TeamIdModel team)
         {
-            TeamModel model = await teamService.Get(team);
+            var model = await teamService.GetTeamWithCountries(team);
             return View(model);
         }
 
@@ -49,7 +49,11 @@ namespace Kadabra.UI.Controllers
                 await teamService.Edit(team);
                 return RedirectToAction("Index");
             }
-            return View("Edit");
+            else
+            {
+                var model = await teamService.GetTeamWithCountries(new TeamIdModel() { Id = team.Id });
+                return View("Edit", model);
+            }
         }
 
         [HttpPost]
@@ -59,8 +63,11 @@ namespace Kadabra.UI.Controllers
             {
                 await teamService.Add(team);
                 return RedirectToAction("Index");
+            }else
+            {
+                var model = await teamService.GetTeamWithCountries();
+                return View("Add", model);
             }
-            return View("Add");
         }
     }
 }

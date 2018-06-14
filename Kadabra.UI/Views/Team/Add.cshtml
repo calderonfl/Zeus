@@ -1,4 +1,7 @@
-﻿@model Kadabra.Model.Team.TeamAddModel
+﻿@using Kadabra.Model.Team;
+@using Kadabra.Model.Country;
+
+@model TeamModelWithCountries
 
 @{
     ViewBag.TitleOption = "Equipos / Agregar";
@@ -22,23 +25,23 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col" })
+                        @Html.LabelFor(model => model.CountryId, htmlAttributes: new { @class = "control-label col" })
                         <div class="col">
-                            <div class="btn-group" >
+                            <div class="btn-group">
                                 <button id="CountriesSelect" type="button" class="btn btn-sm">Sin selección</button>
                                 <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <div id="cboCountry" class="dropdown-menu">
                                     <a class="dropdown-item active">Sin selección</a>
-                                    @foreach (Kadabra.Model.Country.CountryModel country in ViewBag.Countries)
+                                    @foreach (CountryDisplayModel country in Model.Countries)
                                     {
                                         <a class="dropdown-item" id="@country.Id">@country.Name</a>
                                     }
                                 </div>
                             </div>
-                            @Html.HiddenFor(model => model.Country, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.CountryId, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -87,9 +90,9 @@
                 $('#CountriesSelect').val($(this).text());
                 $(this).addClass('active');
                 if ($(this).text() != 'Sin selección') {
-                    $('#Country').val($(this).attr('id'));
+                    $('#CountryId').val($(this).attr('id'));
                 } else {
-                    $('#Country').val('');
+                    $('#CountryId').val('');
                 }
             });
         });

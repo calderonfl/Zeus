@@ -42,10 +42,9 @@ namespace Kadabra.Api.Servicios
         public async Task<CountryCollectionModel> GetAllCountries()
         {
             var entities = await repository.GetAll();
-            var countries = entities.Select(country => new CountryModel()
+            var countries = entities.Select(country => new CountryDisplayModel()
             {
                 Id = country.Id,
-                ImageFlag = country.ImageFlag,
                 Name = country.Name,
                 CountryKey = country.CountryKey
             });

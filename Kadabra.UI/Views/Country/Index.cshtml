@@ -1,4 +1,5 @@
-﻿@model Kadabra.Model.Country.CountryCollectionModel
+﻿@using Kadabra.Model.Country;
+@model CountryCollectionModel
 
 @{
     ViewBag.TitleOption = "Países";
@@ -15,23 +16,18 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Acrónimo</th>
-                    <th>Dirección de la Imagen</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (Kadabra.Model.Country.CountryModel item in Model)
+                @foreach (CountryDisplayModel item in Model)
                 {
                     <tr>
                         <td>
-                            @Html.HiddenFor(modelItem => item.Id)
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.CountryKey)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ImageFlag)
                         </td>
                         <td>
                             <div class="btn-group-sm">

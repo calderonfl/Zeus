@@ -11,6 +11,7 @@ namespace Kadabra.Model.Team.Services
         Task Add(TeamAddModel team);
         Task<TeamCollectionModel> GetAll();
         Task<TeamModel> Get(TeamIdModel model);
-        Task<CountryCollectionModel> GetAllCountries();
+        Task<TeamModelWithCountries> GetTeamWithCountries();
+        Task<TeamModelWithCountries> GetTeamWithCountries(TeamIdModel stadium);
     }
 }

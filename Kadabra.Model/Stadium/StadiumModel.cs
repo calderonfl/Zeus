@@ -13,7 +13,13 @@ namespace Kadabra.Model.Stadium
         public string Description { get; set; }
         [Required()]
         [Display(Name = "Capacidad")]
-        [DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = true, HtmlEncode = false)]
+        [DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = false, HtmlEncode = false)]
         public int Capacity { get; set; }
+
+        public string CountryId { get; set; }
+
+        [Display(Name = "Imagen")]
+        [DataType(DataType.ImageUrl)]
+        public string ImageUrl { get; set; }
     }
 }

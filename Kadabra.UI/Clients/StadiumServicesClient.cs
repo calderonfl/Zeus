@@ -2,22 +2,16 @@
 using System.Net.Http;
 using Kadabra.Model.Stadium;
 using System.Threading.Tasks;
-using System.Net.Http.Headers;
 using Kadabra.Model.Stadium.Services;
 
 namespace Kadabra.UI.Clients
 {
     public class StadiumServicesClient : IStadiumServices
     {
-        private readonly string uriBase = "http://localhost/Kadabra.Api/";
-        private readonly HttpClient apiClient;
+        private readonly KadabraClient apiClient;
         public StadiumServicesClient()
         {
-            apiClient = new HttpClient();
-            apiClient.BaseAddress = new Uri(uriBase);
-            apiClient.DefaultRequestHeaders.Accept.Clear();
-            apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            apiClient.Timeout = new TimeSpan(0, 0, 1, 0, 0);
+            apiClient = new KadabraClient();
         }
         public async Task Add(StadiumAddModel stadium)
         {
@@ -54,6 +48,24 @@ namespace Kadabra.UI.Clients
             HttpResponseMessage response = await apiClient.PostAsJsonAsync("Kadabra/Stadium/DeleteStadium", stadium);
             response.EnsureSuccessStatusCode();
         }
+        public async Task<StadiumModelWithCountries> GetStadiumWithCountries()
+        {
+            HttpResponseMessage response = await apiClient.GetAsync("Kadabra/Stadium/GetStadiumWithCountries");
+            if (response.IsSuccessStatusCode)
+                return await response.Content.ReadAsAsync<StadiumModelWithCountries>();
+            else
+                return null;
+        }
+
+        public async Task<StadiumModelWithCountries> GetStadiumWithCountries(StadiumIdModel stadium)
+        {
+            HttpResponseMessage response = await apiClient.PostAsJsonAsync("Kadabra/Stadium/GetCurrentStadiumWithCountries", stadium);
+            if (response.IsSuccessStatusCode)
+                return await response.Content.ReadAsAsync<StadiumModelWithCountries>();
+            else
+                return null;
+        }
+
         private bool disposedValue = false;
         protected void Dispose(bool disposing)
         {

@@ -3,21 +3,21 @@ using System.Collections.Generic;
 
 namespace Kadabra.Model.Country
 {
-    public class CountryCollectionModel : ICollection<CountryModel>
+    public class CountryCollectionModel : ICollection<CountryDisplayModel>
     {
-        private readonly IList<CountryModel> teams = null;
+        private readonly IList<CountryDisplayModel> teams = null;
 
-        public CountryCollectionModel() : this(new List<CountryModel>())
+        public CountryCollectionModel() : this(new List<CountryDisplayModel>())
         {
         }
-        public CountryCollectionModel(IEnumerable<CountryModel> teamModels)
+        public CountryCollectionModel(IEnumerable<CountryDisplayModel> teamModels)
         {
-            this.teams = new List<CountryModel>(teamModels);
+            this.teams = new List<CountryDisplayModel>(teamModels);
         }
 
         public int Count => teams.Count;
         public bool IsReadOnly => teams.IsReadOnly;
-        public void Add(CountryModel item)
+        public void Add(CountryDisplayModel item)
         {
             teams.Add(item);
         }
@@ -27,22 +27,22 @@ namespace Kadabra.Model.Country
             teams.Clear();
         }
 
-        public bool Contains(CountryModel item)
+        public bool Contains(CountryDisplayModel item)
         {
             return teams.Contains(item);
         }
 
-        public void CopyTo(CountryModel[] array, int arrayIndex)
+        public void CopyTo(CountryDisplayModel[] array, int arrayIndex)
         {
             teams.CopyTo(array, arrayIndex);
         }
 
-        public IEnumerator<CountryModel> GetEnumerator()
+        public IEnumerator<CountryDisplayModel> GetEnumerator()
         {
             return teams.GetEnumerator();
         }
 
-        public bool Remove(CountryModel item)
+        public bool Remove(CountryDisplayModel item)
         {
             return teams.Remove(item);
         }

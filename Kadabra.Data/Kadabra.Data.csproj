@@ -76,6 +76,7 @@
     <Compile Include="RepositoryCountry.cs" />
     <Compile Include="RepositoryStadium.cs" />
     <Compile Include="RepositoryTeam.cs" />
+    <Compile Include="RepositoryTournament.cs" />
     <Compile Include="SortOrder.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>

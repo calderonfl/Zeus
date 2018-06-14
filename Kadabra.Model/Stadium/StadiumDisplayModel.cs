@@ -2,24 +2,21 @@
 
 namespace Kadabra.Model.Stadium
 {
-    public class StadiumAddModel
+    public class StadiumDisplayModel
     {
+        public string Id { get; set; }
         [Display(Name = "Nombre")]
         [StringLength(128, MinimumLength = 3)]
         public string Name { get; set; }
         [Display(Name = "Descripción")]
-        [StringLength(256, MinimumLength = 3)]
-        [DataType(DataType.MultilineText)]
+        [StringLength(128, MinimumLength = 3)]
         public string Description { get; set; }
-        [Required]
+        [Required()]
         [Display(Name = "Capacidad")]
         [DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = false, HtmlEncode = false)]
         public int Capacity { get; set; }
-        [Display(Name = "Imagen")]
-        [DataType(DataType.ImageUrl)]
-        public string ImageUrl { get; set; }
-        [Required]
+        [Required()]
         [Display(Name = "País")]
-        public string CountryId { get; set; }
+        public string Country { get; set; }
     }
 }

@@ -83,5 +83,25 @@ namespace Kadabra.Api.Controllers
                 return InternalServerError(ex);
             }
         }
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IHttpActionResult> GetStadiumWithCountries()
+        {
+            var model = await services.GetStadiumWithCountries();
+            if (model != null)
+                return Ok<StadiumModelWithCountries>(model);
+            else
+                return InternalServerError();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IHttpActionResult> GetCurrentStadiumWithCountries(StadiumIdModel stadium)
+        {
+            var model =  await services.GetStadiumWithCountries(stadium);
+            if (model != null)
+                return Ok<StadiumModelWithCountries>(model);
+            else
+                return InternalServerError();
+        }
     }
 }

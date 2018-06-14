@@ -3,22 +3,15 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Kadabra.Model.Country.Services;
 using Kadabra.Model.Country;
-using System.Net.Http.Headers;
 
 namespace Kadabra.UI.Clients
 {
-    //[Dependency("ICountryServices", LoadHint.Always)]
     internal class CountryServicesClient : ICountryServices
     {
-        private readonly string uriBase = "http://localhost/Kadabra.Api/";
-        private readonly HttpClient apiClient;
+        private readonly KadabraClient apiClient;
         public CountryServicesClient()
         {
-            apiClient = new HttpClient();
-            apiClient.BaseAddress = new Uri(uriBase);
-            apiClient.DefaultRequestHeaders.Accept.Clear();
-            apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            apiClient.Timeout = new TimeSpan(0, 0, 1, 0, 0);
+            apiClient = new KadabraClient();
         }
 
         public async Task Add(CountryAddModel country)

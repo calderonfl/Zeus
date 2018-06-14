@@ -27,5 +27,10 @@ namespace Kadabra.UI.Controllers
         {
             return await Task.Run(() => RedirectToActionPermanent("Index", "Stadium"));
         }
+        [HttpGet()]
+        public async Task<ActionResult> Tournaments()
+        {
+            return await Task.Run(() => RedirectToActionPermanent("Index", "Tournament"));
+        }
     }
 }

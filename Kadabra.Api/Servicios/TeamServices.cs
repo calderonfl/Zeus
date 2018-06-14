@@ -6,7 +6,6 @@ using Kadabra.Model.Team;
 using Kadabra.Data;
 using Kadabra.Data.Identity;
 using Kadabra.Model.Country;
-using System.Data.Entity;
 
 namespace Kadabra.Api.Servicios
 {
@@ -23,7 +22,7 @@ namespace Kadabra.Api.Servicios
         {
             await repository.Add(new KadabraTeam()
             {
-                CountryId = team.Country,
+                CountryId = team.CountryId,
                 ImageFlag = team.ImageFlag,
                 Name = team.Name,
                 TeamKey = team.TeamKey,
@@ -36,7 +35,7 @@ namespace Kadabra.Api.Servicios
             await repository.Update(new KadabraTeam()
             {
                 Id= team.Id,
-                CountryId = team.Country,
+                CountryId = team.CountryId,
                 ImageFlag = team.ImageFlag,
                 Name = team.Name,
                 TeamKey = team.TeamKey
@@ -45,12 +44,11 @@ namespace Kadabra.Api.Servicios
         }
         public async Task<TeamCollectionModel> GetAll()
         {
-            var entities = (await repository.GetQuery()).Include<KadabraTeam, KadabraCountry>(f => f.Country);
-            var teams = entities.Select(team => new TeamModel()
+            var entities = await repository.GetAll();
+            var teams = entities.Select(team => new TeamDisplayModel()
             {
                 Id = team.Id,
                 Country = team.Country.Name,
-                ImageFlag = team.ImageFlag,
                 Name = team.Name,
                 TeamKey = team.TeamKey
             });
@@ -66,16 +64,35 @@ namespace Kadabra.Api.Servicios
             KadabraTeam team = await repository.FindOne(f => f.Id == model.Id);
             return new TeamModel()
             {
-                Country = team.Country.Name,
+                CountryId = team.CountryId,
                 Id = team.Id,
                 ImageFlag = team.ImageFlag,
                 Name = team.Name,
                 TeamKey = team.TeamKey
             };
         }
-        public async Task<CountryCollectionModel> GetAllCountries()
+        private async Task<CountryCollectionModel> GetAllCountries()
         {
             return await new CountryServices(new RepositoryCountry()).GetAllCountries();
+        }
+        public async Task<TeamModelWithCountries> GetTeamWithCountries()
+        {
+            return await GetTeamWithCountries(null);
+        }
+        public async Task<TeamModelWithCountries> GetTeamWithCountries(TeamIdModel team)
+        {
+            var countries = await GetAllCountries();
+            return await GetTeamWithCountries(team, countries);
+
+        }
+        private async Task<TeamModelWithCountries> GetTeamWithCountries(TeamIdModel team, CountryCollectionModel countries)
+        {
+            if (team == null) return new TeamModelWithCountries(countries);
+            else
+            {
+                var model = await this.Get(team);
+                return new TeamModelWithCountries(model, countries);
+            }
         }
         protected void Dispose(bool disposing)
         {

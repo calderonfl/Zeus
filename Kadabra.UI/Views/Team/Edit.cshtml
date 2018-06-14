@@ -1,4 +1,4 @@
-﻿@model Kadabra.Model.Team.TeamModel
+﻿@model Kadabra.Model.Team.TeamModelWithCountries
 
 @{
     ViewBag.TitleOption = "Equipos / Editar";
@@ -22,10 +22,30 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col" })
+                        @Html.LabelFor(model => model.CountryId, htmlAttributes: new { @class = "control-label col" })
                         <div class="col">
-                            @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control", placeholder = "País" } })
-                            @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                            <div class="btn-group">
+                                <button id="CountriesSelect" type="button" class="btn btn-sm">@Model.CountryName</button>
+                                <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div id="cboCountry" class="dropdown-menu">
+                                    <a class="dropdown-item">Sin selección</a>
+                                    @foreach (Kadabra.Model.Country.CountryDisplayModel country in Model.Countries)
+                                    {
+                                        if (country.Id == Model.CountryId)
+                                        {
+                                            <a class="dropdown-item active" id="@country.Id">@country.Name</a>
+                                        }
+                                        else
+                                        {
+                                            <a class="dropdown-item" id="@country.Id">@country.Name</a>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                            @Html.HiddenFor(model => model.CountryId, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -64,4 +84,21 @@
         </div>
     </div>
 </div>
-
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#cboCountry a').click(function () {
+                $('#cboCountry a.active').removeClass('active');
+                $('#CountriesSelect').text($(this).text());
+                $('#CountriesSelect').val($(this).text());
+                $(this).addClass('active');
+                if ($(this).text() != 'Sin selección') {
+                    $('#CountryId').val($(this).attr('id'));
+                } else {
+                    $('#CountryId').val('');
+                }
+            });
+        });
+    </script>
+}

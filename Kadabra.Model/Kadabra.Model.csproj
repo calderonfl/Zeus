@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Country\CountryDisplayModel.cs" />
     <Compile Include="Country\ICountryServices.cs" />
     <Compile Include="Country\CountryAddModel.cs" />
     <Compile Include="Country\CountryCollectionModel.cs" />
@@ -50,14 +51,21 @@
     <Compile Include="RegisterBindingModel.cs" />
     <Compile Include="Stadium\IStadiumServices.cs" />
     <Compile Include="Stadium\StadiumAddModel.cs" />
+    <Compile Include="Stadium\StadiumDisplayModel.cs" />
+    <Compile Include="Stadium\StadiumModelWithCountries.cs" />
     <Compile Include="Stadium\StadiumCollectionModel.cs" />
     <Compile Include="Stadium\StadiumIdModel.cs" />
     <Compile Include="Stadium\StadiumModel.cs" />
     <Compile Include="Team\ITeamServices.cs" />
     <Compile Include="Team\TeamAddModel.cs" />
     <Compile Include="Team\TeamCollectionModel.cs" />
+    <Compile Include="Team\TeamDisplayModel.cs" />
     <Compile Include="Team\TeamModel.cs" />
     <Compile Include="Team\TeamIdModel.cs" />
+    <Compile Include="Team\TeamModelWithCountries.cs" />
+    <Compile Include="Tournament\ITournamentServices.cs" />
+    <Compile Include="Tournament\TournamentCollectionModel.cs" />
+    <Compile Include="Tournament\TournamentDisplayModel.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -495,12 +495,15 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Clients\CountryServicesClient.cs" />
+    <Compile Include="Clients\KadabraClient.cs" />
     <Compile Include="Clients\StadiumServicesClient.cs" />
+    <Compile Include="Clients\TournamentServicesClient.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\StadiumController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Clients\TeamServicesClient.cs" />
+    <Compile Include="Controllers\TournamentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -531,6 +534,7 @@
     <Content Include="Views\Country\Edit.cshtml" />
     <Content Include="Views\Country\Add.cshtml" />
     <Content Include="Views\Stadium\Index.cshtml" />
+    <Content Include="Views\Tournament\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

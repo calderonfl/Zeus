@@ -11,7 +11,7 @@ namespace Kadabra.Model.Country
         [Display(Name = "Acrónimo")]
         [StringLength(3, MinimumLength = 2)]
         public string CountryKey { get; set; }
-        [Display(Name = "Dirección de la imagen")]
+        [Display(Name = "Imagen")]
         public string ImageFlag { get; set; }
     }
 }

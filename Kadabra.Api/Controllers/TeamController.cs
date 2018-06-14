@@ -84,11 +84,27 @@ namespace Kadabra.Api.Controllers
                 return InternalServerError(ex);
             }
         }
-        [HttpGet()]
+
+        [HttpGet]
         [AllowAnonymous]
-        public async Task<IHttpActionResult> GetAllCountries()
+        public async Task<IHttpActionResult> GetTeamWithCountries()
         {
-            return Ok<CountryCollectionModel>(await services.GetAllCountries());
+            var model = await services.GetTeamWithCountries();
+            if (model != null)
+                return Ok<TeamModelWithCountries>(model);
+            else
+                return InternalServerError();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IHttpActionResult> GetCurrentTeamWithCountries(TeamIdModel team)
+        {
+            var model = await services.GetTeamWithCountries(team);
+            if (model != null)
+                return Ok<TeamModelWithCountries>(model);
+            else
+                return InternalServerError();
         }
     }
 }

@@ -4,22 +4,16 @@ using System.Threading.Tasks;
 using Kadabra.Model.Team.Services;
 using Kadabra.Model.Team;
 using System.Net.Http.Headers;
-using Kadabra.Model.Country;
 
 namespace Kadabra.UI.Clients
 {
     //[Dependency("ITeamServices", LoadHint.Always)]
     internal class TeamServicesClient : ITeamServices
     {
-        private readonly string uriBase = "http://localhost/Kadabra.Api/";
-        private readonly HttpClient apiClient;
+        private readonly KadabraClient apiClient;
         public TeamServicesClient()
         {
-            apiClient = new HttpClient();
-            apiClient.BaseAddress = new Uri(uriBase);
-            apiClient.DefaultRequestHeaders.Accept.Clear();
-            apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            apiClient.Timeout = new TimeSpan(0, 0, 1, 0, 0);
+            apiClient = new KadabraClient();
         }
 
         public async Task Add(TeamAddModel team)
@@ -42,13 +36,21 @@ namespace Kadabra.UI.Clients
             else
                 return new TeamCollectionModel();
         }
-        public async Task<CountryCollectionModel> GetAllCountries()
+        public async Task<TeamModelWithCountries> GetTeamWithCountries()
         {
-            HttpResponseMessage response = await apiClient.GetAsync("Kadabra/Team/GetAllCountries");
+            HttpResponseMessage response = await apiClient.GetAsync("Kadabra/Team/GetTeamWithCountries");
             if (response.IsSuccessStatusCode)
-                return await response.Content.ReadAsAsync<CountryCollectionModel>();
+                return await response.Content.ReadAsAsync<TeamModelWithCountries>();
             else
-                return new CountryCollectionModel();
+                return null;
+        }
+        public async Task<TeamModelWithCountries> GetTeamWithCountries(TeamIdModel stadium)
+        {
+            HttpResponseMessage response = await apiClient.PostAsJsonAsync("Kadabra/Team/GetCurrentTeamWithCountries", stadium);
+            if (response.IsSuccessStatusCode)
+                return await response.Content.ReadAsAsync<TeamModelWithCountries>();
+            else
+                return null;
         }
 
         public async Task<TeamModel> Get(TeamIdModel teamId)
@@ -86,7 +88,5 @@ namespace Kadabra.UI.Clients
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
-        
     }
 }

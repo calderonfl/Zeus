@@ -3,21 +3,21 @@ using System.Collections.Generic;
 
 namespace Kadabra.Model.Team
 {
-    public class TeamCollectionModel : ICollection<TeamModel>
+    public class TeamCollectionModel : ICollection<TeamDisplayModel>
     {
-        private readonly IList<TeamModel> teams = null;
+        private readonly IList<TeamDisplayModel> teams = null;
 
-        public TeamCollectionModel() : this(new List<TeamModel>())
+        public TeamCollectionModel() : this(new List<TeamDisplayModel>())
         {
         }
-        public TeamCollectionModel(IEnumerable<TeamModel> teamModels)
+        public TeamCollectionModel(IEnumerable<TeamDisplayModel> TeamDisplayModels)
         {
-            this.teams = new List<TeamModel>(teamModels);
+            this.teams = new List<TeamDisplayModel>(TeamDisplayModels);
         }
 
         public int Count => teams.Count;
         public bool IsReadOnly => teams.IsReadOnly;
-        public void Add(TeamModel item)
+        public void Add(TeamDisplayModel item)
         {
             teams.Add(item);
         }
@@ -27,22 +27,22 @@ namespace Kadabra.Model.Team
             teams.Clear();
         }
 
-        public bool Contains(TeamModel item)
+        public bool Contains(TeamDisplayModel item)
         {
             return teams.Contains(item);
         }
 
-        public void CopyTo(TeamModel[] array, int arrayIndex)
+        public void CopyTo(TeamDisplayModel[] array, int arrayIndex)
         {
             teams.CopyTo(array, arrayIndex);
         }
 
-        public IEnumerator<TeamModel> GetEnumerator()
+        public IEnumerator<TeamDisplayModel> GetEnumerator()
         {
             return teams.GetEnumerator();
         }
 
-        public bool Remove(TeamModel item)
+        public bool Remove(TeamDisplayModel item)
         {
             return teams.Remove(item);
         }
